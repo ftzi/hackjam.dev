@@ -9,19 +9,24 @@
     "lint": "next lint",
     "format:check": "biome check . && eslint .",
     "format": "biome check --apply-unsafe . && eslint --fix .",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:generate:auth": "bunx @better-auth/cli generate --output src/server/db/schema/auth.ts -y",
+    "db:generate": "bun db:generate:auth && drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "env": "bunx vercel env pull .env"
   },
   "dependencies": {
+    "better-auth": "^1.2.5",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.41.0",
+    "lucide-react": "^0.487.0",
     "next": "15.2.4",
     "postgres": "^3.4.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "server-only": "^0.0.1"
+    "sonner": "^2.0.3"
   },
   "devDependencies": {
+    "@better-auth/cli": "^1.2.5",
     "@biomejs/biome": "^1.9.4",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",

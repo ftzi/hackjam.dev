@@ -1,5 +1,4 @@
-import "server-only";
-
+import * as authSchema from "@/server/db/schema/auth";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { serverEnv } from "../serverConsts";
@@ -10,5 +9,6 @@ export const db = drizzle({
   client,
   schema: {
     // Add here the db schemas
+    ...authSchema,
   },
 });

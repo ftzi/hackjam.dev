@@ -2,11 +2,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-Run the development server:
-
-```bash
-bun dev
-```
+- `bun i`
+- `bun env`
+- `bun dev`
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
