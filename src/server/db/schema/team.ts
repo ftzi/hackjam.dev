@@ -6,7 +6,7 @@ import { events } from "./event";
 export const teams = pgTable("team", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: text("name").notNull(),
-  leaderId: uuid("leader_id")
+  leaderId: text("leader_id")
     .notNull()
     .references(() => users.id),
   eventId: uuid("event_id")
@@ -20,7 +20,7 @@ export const teamMember = pgTable(
     teamId: uuid("team_id")
       .notNull()
       .references(() => teams.id),
-    userId: uuid("user_id")
+    userId: text("user_id")
       .notNull()
       .references(() => users.id),
   },

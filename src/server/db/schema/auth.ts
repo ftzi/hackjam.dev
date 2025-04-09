@@ -8,6 +8,9 @@ export const users = pgTable("users", {
   image: text("image"),
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at").notNull(),
+  about: text("about"),
+  githubUrl: text("github_url"),
+  linkedinUrl: text("linkedin_url"),
 });
 
 export const sessions = pgTable("sessions", {
