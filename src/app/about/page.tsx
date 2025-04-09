@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Github } from "lucide-react";
 
 export default function AboutPage() {
   const teamMembers = [
@@ -14,18 +15,21 @@ export default function AboutPage() {
       role: "Full-Stack Developer",
       description:
         "Experienced developer with a passion for building innovative solutions.",
+      github: "ftzi",
     },
     {
       name: "Raphael Novello",
       role: "UI/UX Developer",
       description:
         "Creative mind focused on crafting beautiful and functional user interfaces.",
+      github: "RaphaelAN",
     },
     {
       name: "Thiago Murtinho",
       role: "Backend Engineer",
       description:
         "Technical expert specializing in robust and scalable backend architectures.",
+      github: "thiagomurtinho",
     },
   ];
 
@@ -48,7 +52,16 @@ export default function AboutPage() {
                 <CardDescription>{member.role}</CardDescription>
               </CardHeader>
               <CardContent className="text-center">
-                <p>{member.description}</p>
+                <p className="mb-4">{member.description}</p>
+                <a
+                  href={`https://github.com/${member.github}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-sm hover:underline w-fit mx-auto"
+                >
+                  <Github className="mr-1 h-4 w-4" />
+                  {member.github}
+                </a>
               </CardContent>
             </Card>
           ))}
