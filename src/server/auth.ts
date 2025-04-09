@@ -15,6 +15,23 @@ export const auth = betterAuth({
     schema: authSchema,
   }),
   user: {
-    additionalFields: {},
+    // https://www.better-auth.com/docs/concepts/database#extending-core-schema
+    additionalFields: {
+      about: {
+        type: "string",
+        required: false,
+        input: false,
+      },
+      githubUrl: {
+        type: "string",
+        required: false,
+        input: false,
+      },
+      linkedinUrl: {
+        type: "string",
+        required: false,
+        input: false,
+      },
+    },
   },
 });

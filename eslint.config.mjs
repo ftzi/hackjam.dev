@@ -14,7 +14,7 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   biome,
   {
-    ignores: ["src/server/db/schema/auth.ts"],
+    ignores: ["src/server/db/schema/auth.ts", ".next", ".vercel"],
   },
 ];
 

@@ -11,10 +11,9 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
-import { authClient } from "../auth-client";
+import { authClient } from "../lib/auth-client";
 
 export const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -92,7 +91,7 @@ export const SignIn = () => {
               );
             }}
           >
-            {loading ? <Loader2 size={16} className="animate-spin" /> : Login}
+            {loading ? <Loader2 size={16} className="animate-spin" /> : "Login"}
           </Button>
         </div>
       </CardContent>
