@@ -120,3 +120,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+button,
+[role="button"] {
+    cursor: pointer;
+}
+
+:disabled {
+    cursor: default;
+}

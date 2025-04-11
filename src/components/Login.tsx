@@ -10,34 +10,18 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { authClient } from "@/lib/auth-client";
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { authClient } from "../lib/auth-client";
 
-export const SignUpContent = () => {
-  const [name, setFirstName] = useState("");
+export const LoginContent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   return (
     <div className="grid gap-4 w-70">
-      <div className="grid gap-2">
-        <Label htmlFor="first-name">Name</Label>
-        <Input
-          id="first-name"
-          placeholder="Max"
-          required
-          onChange={(e) => {
-            setFirstName(e.target.value);
-          }}
-          value={name}
-        />
-      </div>
       <div className="grid gap-2">
         <Label htmlFor="email">Email</Label>
         <Input
@@ -51,77 +35,67 @@ export const SignUpContent = () => {
           value={email}
         />
       </div>
+
       <div className="grid gap-2">
-        <Label htmlFor="password">Password</Label>
+        <div className="flex items-center">
+          <Label htmlFor="password">Password</Label>
+        </div>
+
         <Input
           id="password"
           type="password"
+          placeholder="password"
+          autoComplete="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          autoComplete="new-password"
-          placeholder="Password"
         />
       </div>
-      {/* Confirming password is for losers! */}
-      {/* <div className="grid gap-2">
-        <Label htmlFor="password">Confirm Password</Label>
-        <Input
-          id="password_confirmation"
-          type="password"
-          value={passwordConfirmation}
-          onChange={(e) => setPasswordConfirmation(e.target.value)}
-          autoComplete="new-password"
-          placeholder="Confirm Password"
-        />
-      </div> */}
+
       <Button
         type="submit"
         className="w-full"
         disabled={loading}
         onClick={async () => {
-          await authClient.signUp.email(
+          await authClient.signIn.email(
             {
               email,
               password,
-              name: `${name}`,
+              callbackURL: "/",
+              rememberMe: true,
             },
             {
-              onResponse: () => {
-                setLoading(false);
-              },
               onRequest: () => {
                 setLoading(true);
               },
-              onError: (ctx) => {
-                toast.error(ctx.error.message ?? ctx.error.statusText);
+              onResponse: () => {
+                console.log("Answer!");
+                setLoading(false);
               },
-              onSuccess: async () => {
-                router.push("/");
+              onError: (ctx) => {
+                console.log(ctx);
+                toast.error(ctx.error.message ?? ctx.error.statusText);
               },
             },
           );
         }}
       >
-        {loading ? (
-          <Loader2 size={16} className="animate-spin" />
-        ) : (
-          "Create an account"
-        )}
+        {loading ? <Loader2 size={16} className="animate-spin" /> : "Login"}
       </Button>
     </div>
   );
 };
-export const SignUp = () => {
+
+export const Login = () => {
   return (
-    <Card className="z-50 rounded-md rounded-t-none !max-w-fit">
+    <Card className="!max-w-fit">
       <CardHeader>
-        <CardTitle className="text-lg md:text-xl">Sign Up</CardTitle>
+        <CardTitle className="text-lg md:text-xl">Sign In</CardTitle>
         <CardDescription className="text-xs md:text-sm">
-          Enter your information to create an account
+          Enter your email below to login to your account
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <SignUpContent />
+        <LoginContent />
       </CardContent>
     </Card>
   );

@@ -21,9 +21,8 @@ import { NewEventDialog } from "./NewEvent";
 // Column definitions remain the same...
 const columns: ColumnDef<Event>[] = [];
 
+const data = [] as Event[]; // Replace with actual data fetching logic
 const EventsTable = () => {
-  const data = [] as Event[]; // Replace with actual data fetching logic
-
   const table = useReactTable({
     data,
     columns,

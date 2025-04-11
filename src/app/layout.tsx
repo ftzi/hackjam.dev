@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "hackjam.dev",
@@ -9,14 +10,18 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
+  auth,
   children,
 }: Readonly<{
+  auth: React.ReactNode;
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
       <body className={"antialiased"}>
+        <Toaster />
         <Header />
+        {auth}
         <main>{children}</main>
         <Footer />
       </body>
