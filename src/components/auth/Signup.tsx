@@ -15,6 +15,7 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { PasswordInput } from "../ui/password-input";
 
 export const SignUpContent = () => {
   const [name, setFirstName] = useState("");
@@ -53,13 +54,11 @@ export const SignUpContent = () => {
       </div>
       <div className="grid gap-2">
         <Label htmlFor="password">Password</Label>
-        <Input
+        <PasswordInput
           id="password"
-          type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           autoComplete="new-password"
-          placeholder="Password"
         />
       </div>
       {/* Confirming password is for losers! */}

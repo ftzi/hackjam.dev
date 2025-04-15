@@ -14,6 +14,7 @@ import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { authClient } from "../../lib/auth-client";
+import { PasswordInput } from "../ui/password-input";
 
 export const LoginContent = () => {
   const [email, setEmail] = useState("");
@@ -41,11 +42,8 @@ export const LoginContent = () => {
           <Label htmlFor="password">Password</Label>
         </div>
 
-        <Input
+        <PasswordInput
           id="password"
-          type="password"
-          placeholder="password"
-          autoComplete="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
