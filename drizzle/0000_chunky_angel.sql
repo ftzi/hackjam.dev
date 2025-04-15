@@ -50,18 +50,16 @@ CREATE TABLE "verifications" (
 );
 --> statement-breakpoint
 CREATE TABLE "event" (
-	"id" uuid PRIMARY KEY NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
 	"description" text NOT NULL,
 	"max_teams" integer,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"created_by" text NOT NULL,
 	"max_team_members" integer,
 	"start_date" timestamp NOT NULL,
 	"end_date" timestamp NOT NULL,
-	"discord_url" text,
-	"background_color" text,
-	"logo_url" text
+	"registration_deadline" timestamp,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"created_by" text NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "team_member" (

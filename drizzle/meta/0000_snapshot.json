@@ -1,5 +1,5 @@
 {
-  "id": "ad4546b1-aec2-4313-bbcc-03c13b1db5ea",
+  "id": "47c1a075-ea17-4655-bc55-dd0238c8e586",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -330,7 +330,8 @@
           "name": "id",
           "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "name": {
           "name": "name",
@@ -350,19 +351,6 @@
           "primaryKey": false,
           "notNull": false
         },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "created_by": {
-          "name": "created_by",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
         "max_team_members": {
           "name": "max_team_members",
           "type": "integer",
@@ -381,23 +369,24 @@
           "primaryKey": false,
           "notNull": true
         },
-        "discord_url": {
-          "name": "discord_url",
-          "type": "text",
+        "registration_deadline": {
+          "name": "registration_deadline",
+          "type": "timestamp",
           "primaryKey": false,
           "notNull": false
         },
-        "background_color": {
-          "name": "background_color",
-          "type": "text",
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "now()"
         },
-        "logo_url": {
-          "name": "logo_url",
+        "created_by": {
+          "name": "created_by",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
       "indexes": {},
