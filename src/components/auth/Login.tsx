@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import { authClient } from "../../lib/auth-client";
 import { PasswordInput } from "../ui/password-input";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 export const LoginContent = () => {
   const [email, setEmail] = useState("");
@@ -80,6 +81,13 @@ export const LoginContent = () => {
       <Button type="submit" className="w-full" disabled={loading}>
         {loading ? <Loader2 size={16} className="animate-spin" /> : "Login"}
       </Button>
+
+      <p className="text-center text-sm text-muted-foreground mt-2">
+        Don't have an account?{" "}
+        <Link href="/signup" className="text-primary hover:underline">
+          Sign up
+        </Link>
+      </p>
     </form>
   );
 };

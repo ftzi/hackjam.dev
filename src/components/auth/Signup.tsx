@@ -16,6 +16,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { PasswordInput } from "../ui/password-input";
+import Link from "next/link";
 
 export const SignUpContent = () => {
   const [name, setFirstName] = useState("");
@@ -88,6 +89,7 @@ export const SignUpContent = () => {
           autoComplete="new-password"
         />
       </div>
+
       <Button type="submit" className="w-full" disabled={loading}>
         {loading ? (
           <Loader2 size={16} className="animate-spin" />
@@ -95,6 +97,13 @@ export const SignUpContent = () => {
           "Create an account"
         )}
       </Button>
+
+      <p className="text-center text-sm text-muted-foreground mt-2">
+        Already have an account?{" "}
+        <Link href="/login" className="text-primary hover:underline">
+          Login
+        </Link>
+      </p>
     </form>
   );
 };
