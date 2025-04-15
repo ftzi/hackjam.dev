@@ -21,10 +21,36 @@ export const LoginContent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const successUrl = useSearchParams().get('redirect') || "/";
+  const successUrl = useSearchParams().get("redirect") || "/";
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    await authClient.signIn.email(
+      {
+        email,
+        password,
+        callbackURL: successUrl,
+        rememberMe: true,
+      },
+      {
+        onRequest: () => {
+          setLoading(true);
+        },
+        onResponse: () => {
+          setLoading(false);
+        },
+        onError: (ctx) => {
+          toast.error("Error", {
+            description: ctx.error.message ?? ctx.error.statusText,
+          });
+        },
+      }
+    );
+  };
 
   return (
-    <div className="grid gap-4 w-70">
+    <form className="grid gap-4 w-70" onSubmit={handleSubmit}>
       <div className="grid gap-2">
         <Label htmlFor="email">Email</Label>
         <Input
@@ -51,37 +77,10 @@ export const LoginContent = () => {
         />
       </div>
 
-      <Button
-        type="submit"
-        className="w-full"
-        disabled={loading}
-        onClick={async () => {
-          await authClient.signIn.email(
-            {
-              email,
-              password,
-              callbackURL: successUrl,
-              rememberMe: true,
-            },
-            {
-              onRequest: () => {
-                setLoading(true);
-              },
-              onResponse: () => {
-                setLoading(false);
-              },
-              onError: (ctx) => {
-                toast.error("Error", {
-                  description: ctx.error.message ?? ctx.error.statusText,
-                });
-              },
-            },
-          );
-        }}
-      >
+      <Button type="submit" className="w-full" disabled={loading}>
         {loading ? <Loader2 size={16} className="animate-spin" /> : "Login"}
       </Button>
-    </div>
+    </form>
   );
 };
 

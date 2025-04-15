@@ -21,13 +21,39 @@ export const SignUpContent = () => {
   const [name, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const successUrl = useSearchParams().get('redirect') || "/";
+  const successUrl = useSearchParams().get("redirect") || "/";
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await authClient.signUp.email(
+      {
+        email,
+        password,
+        name: `${name}`,
+      },
+      {
+        onResponse: () => {
+          setLoading(false);
+        },
+        onRequest: () => {
+          setLoading(true);
+        },
+        onError: (ctx) => {
+          toast.error("Error", {
+            description: ctx.error.message ?? ctx.error.statusText,
+          });
+        },
+        onSuccess: async () => {
+          router.push(successUrl);
+        },
+      }
+    );
+  };
 
   return (
-    <div className="grid gap-4 w-70">
+    <form className="grid gap-4 w-70" onSubmit={handleSubmit}>
       <div className="grid gap-2">
         <Label htmlFor="first-name">Name</Label>
         <Input
@@ -62,57 +88,17 @@ export const SignUpContent = () => {
           autoComplete="new-password"
         />
       </div>
-      {/* Confirming password is for losers! */}
-      {/* <div className="grid gap-2">
-        <Label htmlFor="password">Confirm Password</Label>
-        <Input
-          id="password_confirmation"
-          type="password"
-          value={passwordConfirmation}
-          onChange={(e) => setPasswordConfirmation(e.target.value)}
-          autoComplete="new-password"
-          placeholder="Confirm Password"
-        />
-      </div> */}
-      <Button
-        type="submit"
-        className="w-full"
-        disabled={loading}
-        onClick={async () => {
-          await authClient.signUp.email(
-            {
-              email,
-              password,
-              name: `${name}`,
-            },
-            {
-              onResponse: () => {
-                setLoading(false);
-              },
-              onRequest: () => {
-                setLoading(true);
-              },
-              onError: (ctx) => {
-                toast.error("Error", {
-                  description: ctx.error.message ?? ctx.error.statusText,
-                });
-              },
-              onSuccess: async () => {
-                router.push(successUrl);
-              },
-            },
-          );
-        }}
-      >
+      <Button type="submit" className="w-full" disabled={loading}>
         {loading ? (
           <Loader2 size={16} className="animate-spin" />
         ) : (
           "Create an account"
         )}
       </Button>
-    </div>
+    </form>
   );
 };
+
 export const SignUp = () => {
   return (
     <Card className="z-50 rounded-md rounded-t-none !max-w-fit">
