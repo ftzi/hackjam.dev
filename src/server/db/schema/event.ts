@@ -10,10 +10,6 @@ export const events = pgTable("event", {
   maxTeamMembers: integer("max_team_members"),
   startDate: timestamp("start_date").notNull(),
   endDate: timestamp("end_date").notNull(),
-  // TODO is a new feature to add
-  // discordUrl: text("discord_url"),
-  // backgroundColor: text("background_color"),
-  // logoUrl: text("logo_url"),
   registrationDeadline: timestamp("registration_deadline"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   createdBy: text("created_by")
