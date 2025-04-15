@@ -15,6 +15,9 @@ const eslintConfig = [
   biome,
   {
     ignores: ["src/server/db/schema/auth.ts", ".next", ".vercel"],
+    rules: {
+      "react/no-unescaped-entities": "off",
+    },
   },
 ];
 
