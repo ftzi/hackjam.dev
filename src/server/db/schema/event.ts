@@ -1,11 +1,21 @@
 import { relations } from "drizzle-orm";
-import { integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import {
+  integer,
+  pgEnum,
+  pgTable,
+  text,
+  timestamp,
+  uuid,
+} from "drizzle-orm/pg-core";
 import { users } from "./auth";
+
+const statusEnum = pgEnum("status", ["draft", "upcoming", "completed"]);
 
 export const events = pgTable("event", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull(),
   description: text("description").notNull(),
+  status: statusEnum("status").notNull().default("draft"),
   maxTeams: integer("max_teams"),
   maxTeamMembers: integer("max_team_members"),
   startDate: timestamp("start_date").notNull(),
