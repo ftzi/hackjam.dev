@@ -5,7 +5,6 @@ import { Suspense } from "react";
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
-      {/* <EventsTable /> */}
       <section className="flex-1 container mx-auto">
         <div className="py-6 md:py-12">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8">
