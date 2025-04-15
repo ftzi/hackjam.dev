@@ -30,7 +30,7 @@ export default function Page() {
           Fill in the details below to create a new hackathon event. Click save
           when you're done.
         </DialogDescription>
-        <CreateEventForm />
+        <CreateEventForm onSuccess={() => router.push('/')} />
       </DialogContent>
     </Dialog>
   );
