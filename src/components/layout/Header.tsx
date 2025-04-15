@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -9,6 +8,7 @@ import {
 import { Logo } from "@/components/utils/Logo";
 import Link from "next/link";
 import React from "react";
+import { AuthSection } from "./AuthSection";
 
 export function Header() {
   return (
@@ -39,20 +39,5 @@ export function Header() {
     </header>
   );
 }
-
-const AuthSection = () => {
-  return (
-    <div className="flex items-center gap-4">
-      <div className="flex gap-2">
-        <Button variant="outline" asChild>
-          <Link href="/login">Login</Link>
-        </Button>
-        <Button asChild>
-          <Link href="/signup">Sign Up</Link>
-        </Button>
-      </div>
-    </div>
-  );
-};
 
 export default Header;

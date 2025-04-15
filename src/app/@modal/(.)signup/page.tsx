@@ -1,6 +1,6 @@
 "use client";
 
-import { LoginContent } from "@/components/Login";
+import { SignUpContent } from "@/components/auth/Signup";
 import {
   Dialog,
   DialogContent,
@@ -27,12 +27,12 @@ export default function Page() {
         className="!max-w-fit"
       >
         <DialogHeader>
-          <DialogTitle>Login</DialogTitle>
+          <DialogTitle>Sign Up</DialogTitle>
           <DialogDescription>
-            Access your account by logging in below
+            Create an account by signing up below
           </DialogDescription>
         </DialogHeader>
-        <LoginContent />
+        <SignUpContent />
       </DialogContent>
     </Dialog>
   );

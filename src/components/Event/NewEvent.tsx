@@ -27,7 +27,7 @@ export const NewEventDialog = () => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild >
         <Button>Add New Event</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

@@ -93,7 +93,9 @@ export const SignUpContent = () => {
                 setLoading(true);
               },
               onError: (ctx) => {
-                toast.error(ctx.error.message ?? ctx.error.statusText);
+                toast.error("Error", {
+                  description: ctx.error.message ?? ctx.error.statusText,
+                });
               },
               onSuccess: async () => {
                 router.push("/");

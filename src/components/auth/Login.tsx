@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { authClient } from "../lib/auth-client";
+import { authClient } from "../../lib/auth-client";
 
 export const LoginContent = () => {
   const [email, setEmail] = useState("");
@@ -73,7 +73,9 @@ export const LoginContent = () => {
               },
               onError: (ctx) => {
                 console.log(ctx);
-                toast.error(ctx.error.message ?? ctx.error.statusText);
+                toast.error("Error", {
+                  description: ctx.error.message ?? ctx.error.statusText,
+                });
               },
             },
           );

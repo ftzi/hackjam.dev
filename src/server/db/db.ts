@@ -5,8 +5,15 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { serverEnv } from "../serverConsts";
 
-// Disable prefetch as it is not supported for "Transaction" pool mode
-const client = postgres(serverEnv.DATABASE_URL, { prepare: false });
+const globalForDb = globalThis as unknown as {
+  client: postgres.Sql | undefined;
+};
+
+const client =
+  globalForDb.client ?? postgres(serverEnv.DATABASE_URL, { prepare: false });
+
+if (process.env.NODE_ENV === "development") globalForDb.client = client;
+
 export const db = drizzle({
   client,
   schema: {
