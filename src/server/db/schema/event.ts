@@ -3,20 +3,22 @@ import { integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { users } from "./auth";
 
 export const events = pgTable("event", {
-  id: uuid().primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull(),
   description: text("description").notNull(),
   maxTeams: integer("max_teams"),
+  maxTeamMembers: integer("max_team_members"),
+  startDate: timestamp("start_date").notNull(),
+  endDate: timestamp("end_date").notNull(),
+  // TODO is a new feature to add
+  // discordUrl: text("discord_url"),
+  // backgroundColor: text("background_color"),
+  // logoUrl: text("logo_url"),
+  registrationDeadline: timestamp("registration_deadline"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   createdBy: text("created_by")
     .notNull()
     .references(() => users.id),
-  maxTeamMembers: integer("max_team_members"),
-  startDate: timestamp("start_date").notNull(),
-  endDate: timestamp("end_date").notNull(),
-  discordUrl: text("discord_url"),
-  backgroundColor: text("background_color"),
-  logoUrl: text("logo_url"),
 });
 
 export type Event = typeof events.$inferSelect;
