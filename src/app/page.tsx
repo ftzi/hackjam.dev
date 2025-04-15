@@ -1,4 +1,4 @@
-import CreateEventButton from "@/components/events/create-event-button";
+import { CreateEventButton } from "@/components/events/create-event-button";
 import EventsList from "@/components/events/events-list";
 import { Suspense } from "react";
 
@@ -19,7 +19,7 @@ export default function Home() {
             </div>
             <CreateEventButton />
           </div>
-          <Suspense fallback={"...loading"} >
+          <Suspense fallback={"...loading"}>
             <EventsList />
           </Suspense>
         </div>
