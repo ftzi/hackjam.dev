@@ -1,5 +1,7 @@
 import { CreateEventButton } from "@/components/events/create-event-button";
 import EventsList from "@/components/events/events-list";
+import EventsListSkeleton from "@/components/events/events-list-skeleton";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -17,7 +19,9 @@ export default function Home() {
             </div>
             <CreateEventButton />
           </div>
-          <EventsList />
+          <Suspense fallback={<EventsListSkeleton />}>
+            <EventsList />
+          </Suspense>
         </div>
       </section>
     </div>
