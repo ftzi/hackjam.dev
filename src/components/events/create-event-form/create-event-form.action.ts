@@ -9,7 +9,6 @@ import type { FormValues } from "./create-event-form.schema";
 export async function createEventAction(values: FormValues) {
   const user = await getUser();
 
-  // TODO: Validate if the user is an admin or has permission to create events
   if (!user) {
     throw new Error("You must be signed in to create an event");
   }
