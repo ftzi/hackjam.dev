@@ -66,11 +66,9 @@ export const LoginContent = () => {
                 setLoading(true);
               },
               onResponse: () => {
-                console.log("Answer!");
                 setLoading(false);
               },
               onError: (ctx) => {
-                console.log(ctx);
                 toast.error("Error", {
                   description: ctx.error.message ?? ctx.error.statusText,
                 });
