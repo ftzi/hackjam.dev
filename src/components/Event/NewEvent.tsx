@@ -13,11 +13,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type React from "react";
 
 export const NewEventDialog = () => {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,10 +28,25 @@ export const NewEventDialog = () => {
     setOpen(false);
   };
 
+  const onAddNewEventClick: React.MouseEventHandler<HTMLButtonElement> = async (
+    e,
+  ) => {
+    e.preventDefault(); // Prevent default action first
+
+    const x = await authClient.getSession();
+    if (!x.data) {
+      router.push("/signup");
+      return;
+    }
+
+    // Continue with default action by manually triggering dialog open
+    setOpen(true);
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild >
-        <Button>Add New Event</Button>
+      <DialogTrigger asChild>
+        <Button onClick={onAddNewEventClick}>Add New Event</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

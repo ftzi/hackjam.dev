@@ -1,20 +1,38 @@
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
-import { DialogFooter } from "@/components/ui/dialog"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { DialogFooter } from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   title: z.string().min(5, {
@@ -45,11 +63,11 @@ const formSchema = z.object({
   registrationDeadline: z.date({
     required_error: "Registration deadline is required.",
   }),
-})
+});
 
-type FormValues = z.infer<typeof formSchema>
+type FormValues = z.infer<typeof formSchema>;
 
-export function CreateEventForm({ onSuccess }: { onSuccess: () => void }) {
+export function CreateEventForm({ onSuccess }: { onSuccess?: () => void }) {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -61,17 +79,17 @@ export function CreateEventForm({ onSuccess }: { onSuccess: () => void }) {
       participantsPerTeam: 4,
       maxParticipants: 100,
     },
-  })
+  });
 
   function onSubmit(values: FormValues) {
-    console.log(values)
+    console.log(values);
     // Here you would typically send the data to your API
-    onSuccess()
+    onSuccess?.();
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
         <Tabs defaultValue="details" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="details">Event Details</TabsTrigger>
@@ -100,7 +118,11 @@ export function CreateEventForm({ onSuccess }: { onSuccess: () => void }) {
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Describe your hackathon event..." className="min-h-[100px]" {...field} />
+                    <Textarea
+                      placeholder="Describe your hackathon event..."
+                      className="min-h-[100px]"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -117,14 +139,26 @@ export function CreateEventForm({ onSuccess }: { onSuccess: () => void }) {
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
-                          <Button variant={"outline"} className="w-full pl-3 text-left font-normal">
-                            {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                          <Button
+                            variant={"outline"}
+                            className="w-full pl-3 text-left font-normal"
+                          >
+                            {field.value ? (
+                              format(field.value, "PPP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          initialFocus
+                        />
                       </PopoverContent>
                     </Popover>
                     <FormMessage />
@@ -141,14 +175,26 @@ export function CreateEventForm({ onSuccess }: { onSuccess: () => void }) {
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
-                          <Button variant={"outline"} className="w-full pl-3 text-left font-normal">
-                            {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                          <Button
+                            variant={"outline"}
+                            className="w-full pl-3 text-left font-normal"
+                          >
+                            {field.value ? (
+                              format(field.value, "PPP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          initialFocus
+                        />
                       </PopoverContent>
                     </Popover>
                     <FormMessage />
@@ -165,7 +211,10 @@ export function CreateEventForm({ onSuccess }: { onSuccess: () => void }) {
                   <FormItem>
                     <FormLabel>Location</FormLabel>
                     <FormControl>
-                      <Input placeholder="San Francisco, CA or Online" {...field} />
+                      <Input
+                        placeholder="San Francisco, CA or Online"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -178,7 +227,10 @@ export function CreateEventForm({ onSuccess }: { onSuccess: () => void }) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Event Type</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select event type" />
@@ -208,7 +260,9 @@ export function CreateEventForm({ onSuccess }: { onSuccess: () => void }) {
                     <FormControl>
                       <Input type="number" min={1} {...field} />
                     </FormControl>
-                    <FormDescription>Maximum number of teams allowed</FormDescription>
+                    <FormDescription>
+                      Maximum number of teams allowed
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -223,7 +277,9 @@ export function CreateEventForm({ onSuccess }: { onSuccess: () => void }) {
                     <FormControl>
                       <Input type="number" min={1} {...field} />
                     </FormControl>
-                    <FormDescription>Maximum number of participants per team</FormDescription>
+                    <FormDescription>
+                      Maximum number of participants per team
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -240,7 +296,9 @@ export function CreateEventForm({ onSuccess }: { onSuccess: () => void }) {
                     <FormControl>
                       <Input type="number" min={1} {...field} />
                     </FormControl>
-                    <FormDescription>Total maximum participants allowed</FormDescription>
+                    <FormDescription>
+                      Total maximum participants allowed
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -255,17 +313,31 @@ export function CreateEventForm({ onSuccess }: { onSuccess: () => void }) {
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
-                          <Button variant={"outline"} className="w-full pl-3 text-left font-normal">
-                            {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                          <Button
+                            variant={"outline"}
+                            className="w-full pl-3 text-left font-normal"
+                          >
+                            {field.value ? (
+                              format(field.value, "PPP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          initialFocus
+                        />
                       </PopoverContent>
                     </Popover>
-                    <FormDescription>Last day for team registration</FormDescription>
+                    <FormDescription>
+                      Last day for team registration
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -279,5 +351,5 @@ export function CreateEventForm({ onSuccess }: { onSuccess: () => void }) {
         </DialogFooter>
       </form>
     </Form>
-  )
+  );
 }

@@ -16,7 +16,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import type React from "react";
-import { NewEventDialog } from "./NewEvent";
+import { CreateEventButton } from "../events/create-event-button";
 
 // Column definitions remain the same...
 const columns: ColumnDef<Event>[] = [];
@@ -32,7 +32,7 @@ const EventsTable = () => {
   return (
     <div>
       <div className="flex justify-end mb-4">
-        <NewEventDialog />
+        <CreateEventButton />
       </div>
       <Table>
         {/* Existing table code */}
