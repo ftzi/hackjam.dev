@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth-client";
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { PasswordInput } from "../ui/password-input";
@@ -24,6 +24,7 @@ export const SignUpContent = () => {
   // const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const successUrl = useSearchParams().get('redirect') || "/";
 
   return (
     <div className="grid gap-4 w-70">
@@ -97,7 +98,7 @@ export const SignUpContent = () => {
                 });
               },
               onSuccess: async () => {
-                router.push("/");
+                router.push(successUrl);
               },
             },
           );

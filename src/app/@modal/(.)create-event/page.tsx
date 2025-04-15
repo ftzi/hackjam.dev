@@ -16,7 +16,7 @@ export default function Page() {
     <Dialog
       open
       onOpenChange={(open) => {
-        if (!open) router.back();
+        if (!open) router.push("/");
       }}
     >
       <DialogContent

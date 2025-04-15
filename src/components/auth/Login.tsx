@@ -15,11 +15,13 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { authClient } from "../../lib/auth-client";
 import { PasswordInput } from "../ui/password-input";
+import { useSearchParams } from "next/navigation";
 
 export const LoginContent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const successUrl = useSearchParams().get('redirect') || "/";
 
   return (
     <div className="grid gap-4 w-70">
@@ -58,7 +60,7 @@ export const LoginContent = () => {
             {
               email,
               password,
-              callbackURL: "/",
+              callbackURL: successUrl,
               rememberMe: true,
             },
             {
