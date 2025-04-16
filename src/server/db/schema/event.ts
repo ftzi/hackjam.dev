@@ -14,7 +14,7 @@ export const events = pgTable("event", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   createdBy: text("created_by")
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, { onDelete: 'cascade' }),
 });
 
 export type Event = typeof events.$inferSelect;

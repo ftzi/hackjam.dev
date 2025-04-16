@@ -8,10 +8,10 @@ export const teams = pgTable("team", {
   name: text("name").notNull(),
   leaderId: text("leader_id")
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, { onDelete: 'cascade' }),
   eventId: uuid("event_id")
     .notNull()
-    .references(() => events.id),
+    .references(() => events.id, { onDelete: 'cascade' }),
 });
 
 export type Team = typeof teams.$inferSelect;
@@ -21,10 +21,10 @@ export const teamMember = pgTable(
   {
     teamId: uuid("team_id")
       .notNull()
-      .references(() => teams.id),
+      .references(() => teams.id, { onDelete: 'cascade' }),
     userId: text("user_id")
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onDelete: 'cascade' }),
   },
   (t) => ({
     pk: primaryKey({ columns: [t.teamId, t.userId] }),

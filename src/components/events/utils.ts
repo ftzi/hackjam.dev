@@ -2,7 +2,7 @@
 
 import { type User, getUser } from "@/server/auth";
 import { db } from "@/server/db/db";
-import type { Event } from "@/server/db/schema/event";
+import { events, type Event } from "@/server/db/schema/event";
 import { type Team, teams } from "@/server/db/schema/team";
 import { count, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
@@ -78,3 +78,19 @@ export const deregisterOwnTeamFromEvent = async ({
 
   revalidateEvent(event);
 };
+
+
+export const deleteEvent = async ({
+  event,
+}: {
+  event: Event;
+}) => {
+  const user = await getUser();
+  if (!user) redirect("/signup");
+
+  if (user.id !== event.createdBy) redirect("/");
+
+  await db.delete(events).where(eq(events.id, event.id));
+
+  revalidateEvent(event);
+}

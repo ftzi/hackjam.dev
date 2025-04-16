@@ -35,8 +35,13 @@ import {
   Users,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { deregisterOwnTeamFromEvent, registerOwnTeamToEvent } from "../utils";
+import {
+  deleteEvent,
+  deregisterOwnTeamFromEvent,
+  registerOwnTeamToEvent,
+} from "../utils";
 
 // type Prize = {
 //   place: string;
@@ -80,6 +85,7 @@ export default function EventDetail({
   teams: Team[] | undefined;
   teamsCount: number;
 }) {
+  const router = useRouter();
   const isCreator = event.createdBy === user?.id;
 
   const formatDate = (date: Date) => {
@@ -330,7 +336,14 @@ export default function EventDetail({
                       </AlertDialogHeader>
                       <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction className="bg-destructive text-destructive-foreground">
+                        <AlertDialogAction
+                          className="bg-destructive text-destructive-foreground"
+                          onClick={async () => {
+                            await deleteEvent({ event });
+                            toast.success("Event deleted successfully!");
+                            router.push("/");
+                          }}
+                        >
                           Delete
                         </AlertDialogAction>
                       </AlertDialogFooter>
