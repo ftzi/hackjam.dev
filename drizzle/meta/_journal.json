@@ -8,6 +8,13 @@
       "when": 1744759745191,
       "tag": "0000_chunky_angel",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1744843577903,
+      "tag": "0001_bored_giant_girl",
+      "breakpoints": true
     }
   ]
 }

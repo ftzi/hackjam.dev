@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const formSchema = z.object({
+export const eventFormSchema = z.object({
   name: z.string().min(5, {
     message: "Title must be at least 5 characters.",
   }),
@@ -28,4 +28,4 @@ export const formSchema = z.object({
     }),
 });
 
-export type FormValues = z.infer<typeof formSchema>;
+export type EventFormValues = z.infer<typeof eventFormSchema>;

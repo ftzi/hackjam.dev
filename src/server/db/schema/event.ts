@@ -6,15 +6,15 @@ export const events = pgTable("event", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull(),
   description: text("description").notNull(),
-  maxTeams: integer("max_teams"),
-  maxTeamMembers: integer("max_team_members"),
+  maxTeams: integer("max_teams").notNull(),
+  maxTeamMembers: integer("max_team_members").notNull(),
   startDate: timestamp("start_date").notNull(),
   endDate: timestamp("end_date").notNull(),
-  registrationDeadline: timestamp("registration_deadline"),
+  registrationDeadline: timestamp("registration_deadline").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   createdBy: text("created_by")
     .notNull()
-    .references(() => users.id, { onDelete: 'cascade' }),
+    .references(() => users.id, { onDelete: "cascade" }),
 });
 
 export type Event = typeof events.$inferSelect;

@@ -8,8 +8,8 @@ import { count, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export const revalidateEvent = async (event: Event) => {
-  revalidatePath(`/events/${event.id}`);
+export const revalidateEvent = async (eventId: string) => {
+  revalidatePath(`/events/${eventId}`);
   revalidatePath("/");
 };
 
@@ -63,7 +63,7 @@ export const registerOwnTeamToEvent = async ({
       eventId: event.id,
     });
 
-  revalidateEvent(event);
+  revalidateEvent(event.id);
 };
 
 export const deregisterOwnTeamFromEvent = async ({
@@ -76,9 +76,8 @@ export const deregisterOwnTeamFromEvent = async ({
 
   await db.delete(teams).where(eq(teams.leaderId, user.id));
 
-  revalidateEvent(event);
+  revalidateEvent(event.id);
 };
-
 
 export const deleteEvent = async ({
   event,
@@ -92,5 +91,5 @@ export const deleteEvent = async ({
 
   await db.delete(events).where(eq(events.id, event.id));
 
-  revalidateEvent(event);
-}
+  revalidateEvent(event.id);
+};

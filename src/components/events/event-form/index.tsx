@@ -27,15 +27,20 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { toast } from "sonner";
 import { createEventAction } from "./create-event-form.action";
-import { formSchema } from "./create-event-form.schema";
-import type { FormValues } from "./create-event-form.schema";
+import { eventFormSchema } from "./create-event-form.schema";
+import type { EventFormValues } from "./create-event-form.schema";
+import { updateEventAction } from "./update-event-form.action";
 
-export function CreateEventForm({ onSuccess }: { onSuccess?: () => void }) {
+export function EventForm({
+  onSuccess,
+  data,
+  editingId,
+}: { onSuccess?: () => void; editingId?: string; data?: EventFormValues }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
+  const form = useForm<EventFormValues>({
+    resolver: zodResolver(eventFormSchema),
+    defaultValues: data ?? {
       name: "",
       description: "",
       maxTeams: 10,
@@ -43,21 +48,26 @@ export function CreateEventForm({ onSuccess }: { onSuccess?: () => void }) {
     },
   });
 
-  async function onSubmit(values: FormValues) {
+  async function onSubmit(values: EventFormValues) {
     try {
       setIsSubmitting(true);
-      const result = await createEventAction(values);
 
-      if (result.success) {
+      if (editingId) {
+        await updateEventAction(editingId, values);
+        toast.success("Event has been updated", {
+          description: "Your Hackathon event has been successfully updated.",
+        });
+      } else {
+        await createEventAction(values);
         toast.success("Event has been created", {
           description: "Your Hackathon event has been successfully created.",
         });
-        onSuccess?.();
       }
+      onSuccess?.();
     } catch {
-      toast.error("Failed to create event", {
+      toast.error("Failed to submit event", {
         description:
-          "There was an error creating your event. Please try again.",
+          "There was an error submitting your event. Please try again.",
       });
     } finally {
       setIsSubmitting(false);

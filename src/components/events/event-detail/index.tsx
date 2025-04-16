@@ -308,9 +308,11 @@ export default function EventDetail({
             <CardContent>
               {isCreator ? (
                 <div className="space-y-4">
-                  <Button className="w-full" variant="default">
-                    <Edit className="mr-2 h-4 w-4" />
-                    Edit Event
+                  <Button className="w-full" variant="default" asChild>
+                    <Link href={`/events/${event.id}/edit`}>
+                      <Edit className="mr-2 h-4 w-4" />
+                      Edit Event
+                    </Link>
                   </Button>
 
                   <AlertDialog>

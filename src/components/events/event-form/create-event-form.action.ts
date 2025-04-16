@@ -4,16 +4,16 @@ import { getUser } from "@/server/auth";
 import { db } from "@/server/db/db";
 import { events } from "@/server/db/schema/event";
 import { revalidatePath } from "next/cache";
-import type { FormValues } from "./create-event-form.schema";
+import type { EventFormValues } from "./create-event-form.schema";
 
-export async function createEventAction(values: FormValues) {
+export async function createEventAction(values: EventFormValues) {
   const user = await getUser();
 
   if (!user) {
     throw new Error("You must be signed in to create an event");
   }
 
-  const newEvent = await db
+  await db
     .insert(events)
     .values({
       name: values.name,
@@ -28,6 +28,4 @@ export async function createEventAction(values: FormValues) {
     .returning();
 
   revalidatePath("/");
-
-  return { success: true, event: newEvent[0] };
 }

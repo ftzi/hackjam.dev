@@ -7,16 +7,17 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
+import type { Event } from "@/server/db/schema/event";
 import { useRouter } from "next/navigation";
 
-export default function Page() {
+export const EventEditDialog = ({ event }: { event: Event }) => {
   const router = useRouter();
 
   return (
     <Dialog
       open
       onOpenChange={(open) => {
-        if (!open) router.push("/");
+        if (!open) router.back();
       }}
     >
       <DialogContent
@@ -25,13 +26,17 @@ export default function Page() {
         }}
         className="!max-w-fit"
       >
-        <DialogTitle>Create New Hackathon Event</DialogTitle>
+        <DialogTitle>Edit Hackathon Event</DialogTitle>
         <DialogDescription>
-          Fill in the details below to create a new hackathon event. Click save
-          when you're done.
+          Fill in the details below to edit the hackathon event. Click save when
+          you're done.
         </DialogDescription>
-        <EventForm onSuccess={() => router.push("/")} />
+        <EventForm
+          onSuccess={() => router.push(`/events/${event.id}`)}
+          editingId={event.id}
+          data={event}
+        />
       </DialogContent>
     </Dialog>
   );
-}
+};
