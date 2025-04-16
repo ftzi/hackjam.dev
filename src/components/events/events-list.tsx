@@ -1,4 +1,3 @@
-"use client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,113 +8,78 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import type { User } from "@/server/auth";
 import { getUserAction } from "@/server/auth.action";
-import type { Event } from "@/server/db/schema/event";
 import { CalendarDays, Users } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
 import {
   Pagination,
   PaginationContent,
+  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
 } from "../ui/pagination";
 import { getEventList } from "./event-list.action";
+import { PaginationButton } from "./pagination-button";
 
 interface EventsListProps {
   searchQuery: string;
   currentPage: number;
-  onPageChange: (page: number) => void;
 }
 
-export default function EventsList({
+export default async function EventsList({
   searchQuery,
   currentPage,
-  onPageChange,
 }: EventsListProps) {
   const ITEMS_PER_PAGE = 6;
 
-  const [eventsList, setEventList] = useState<Event[]>();
-  const [user, setUser] = useState<User>();
+  const { events, totalEvents } = await getEventList({
+    searchQuery,
+    page: currentPage,
+    limit: ITEMS_PER_PAGE,
+  });
 
-  useEffect(() => {
-    async function fetchEvents() {
-      const events = await getEventList();
-      setEventList(events);
-    }
+  const user = await getUserAction();
+  const totalPages = Math.ceil(totalEvents / ITEMS_PER_PAGE);
 
-    fetchEvents();
-
-    async function fetchUser() {
-      const user = await getUserAction();
-      setUser(user);
-    }
-    fetchUser();
-  }, []);
-
-  const filteredEvents = useMemo(() => {
-    if (!searchQuery) return eventsList;
-
-    const query = searchQuery.toLowerCase();
-    return eventsList?.filter(
-      (event) =>
-        event.name.toLowerCase().includes(query) ||
-        event.description.toLowerCase().includes(query),
-    );
-  }, [searchQuery, eventsList]);
-
-  const totalPages = Math.ceil((filteredEvents?.length || 0) / ITEMS_PER_PAGE);
-  const paginatedEvents = useMemo(() => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    return filteredEvents?.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-  }, [filteredEvents, currentPage]);
-
-  const pageNumbers = useMemo(() => {
-    const pages = [];
+  const generatePaginationItems = () => {
+    const items = [];
     const maxVisiblePages = 5;
 
     if (totalPages <= maxVisiblePages) {
-      // Show all pages if there are few
       for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
+        items.push({ type: "page", page: i });
       }
     } else {
-      // Show a subset of pages with ellipsis
-      if (currentPage <= 3) {
-        // Near the start
-        for (let i = 1; i <= 4; i++) {
-          pages.push(i);
-        }
-        pages.push(-1); // Represents ellipsis
-        pages.push(totalPages);
-      } else if (currentPage >= totalPages - 2) {
-        // Near the end
-        pages.push(1);
-        pages.push(-1);
-        for (let i = totalPages - 3; i <= totalPages; i++) {
-          pages.push(i);
-        }
-      } else {
-        // Somewhere in the middle
-        pages.push(1);
-        pages.push(-1);
-        pages.push(currentPage - 1);
-        pages.push(currentPage);
-        pages.push(currentPage + 1);
-        pages.push(-1);
-        pages.push(totalPages);
+      items.push({ type: "page", page: 1 });
+
+      if (currentPage > 3) {
+        items.push({ type: "ellipsis" });
+      }
+
+      const start = Math.max(2, currentPage - 1);
+      const end = Math.min(totalPages - 1, currentPage + 1);
+
+      for (let i = start; i <= end; i++) {
+        items.push({ type: "page", page: i });
+      }
+
+      if (currentPage < totalPages - 2) {
+        items.push({ type: "ellipsis" });
+      }
+
+      if (totalPages > 1) {
+        items.push({ type: "page", page: totalPages });
       }
     }
 
-    return pages;
-  }, [currentPage, totalPages]);
+    return items;
+  };
+
+  const paginationItems = generatePaginationItems();
 
   return (
     <section className="space-y-6">
-      {(filteredEvents?.length || 0) === 0 ? (
+      {events.length === 0 ? (
         <div className="text-center py-12">
           <h3 className="text-lg font-medium">No events found</h3>
           <p className="text-muted-foreground mt-1">
@@ -125,7 +89,7 @@ export default function EventsList({
       ) : (
         <>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {paginatedEvents?.map((event) => (
+            {events.map((event) => (
               <Link
                 href={`/events/${event.id}`}
                 key={event.id}
@@ -156,8 +120,8 @@ export default function EventsList({
                       <div className="flex items-center">
                         <Users className="mr-2 h-4 w-4 opacity-70" />
                         {/* <span>
-                    Teams: {event.registeredTeams}/{event.teamLimit} (max {event.participantsPerTeam} per team)
-                  </span> */}
+                          Teams: {event.registeredTeams}/{event.teamLimit} (max {event.participantsPerTeam} per team)
+                        </span> */}
                       </div>
                     </div>
                   </CardContent>
@@ -176,56 +140,40 @@ export default function EventsList({
               </Link>
             ))}
           </div>
+
           {totalPages > 1 && (
             <Pagination className="mt-8">
               <PaginationContent>
                 <PaginationItem>
-                  <PaginationPrevious
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      if (currentPage > 1) onPageChange(currentPage - 1);
-                    }}
-                    className={
-                      currentPage === 1 ? "pointer-events-none opacity-50" : ""
-                    }
+                  <PaginationButton
+                    direction="previous"
+                    disabled={currentPage === 1}
+                    currentPage={currentPage}
+                    searchQuery={searchQuery}
                   />
                 </PaginationItem>
 
-                {pageNumbers.map((pageNumber, index) => (
-                  <PaginationItem key={pageNumber}>
-                    {pageNumber === -1 ? (
-                      <span className="flex h-9 w-9 items-center justify-center text-sm">
-                        ...
-                      </span>
+                {paginationItems.map((item) => (
+                  <PaginationItem key={item.page + item.type}>
+                    {item.type === "ellipsis" ? (
+                      <PaginationEllipsis />
                     ) : (
                       <PaginationLink
-                        href="#"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          onPageChange(pageNumber);
-                        }}
-                        isActive={pageNumber === currentPage}
+                        href={`?page=${item.page}${searchQuery ? `&query=${searchQuery}` : ''}`}
+                        isActive={item.page === currentPage}
                       >
-                        {pageNumber}
+                        {item.page}
                       </PaginationLink>
                     )}
                   </PaginationItem>
                 ))}
 
                 <PaginationItem>
-                  <PaginationNext
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      if (currentPage < totalPages)
-                        onPageChange(currentPage + 1);
-                    }}
-                    className={
-                      currentPage === totalPages
-                        ? "pointer-events-none opacity-50"
-                        : ""
-                    }
+                  <PaginationButton
+                    direction="next"
+                    disabled={currentPage >= totalPages}
+                    currentPage={currentPage}
+                    searchQuery={searchQuery}
                   />
                 </PaginationItem>
               </PaginationContent>
