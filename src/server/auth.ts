@@ -1,8 +1,8 @@
 import { env } from "@/lib/consts";
+
 import * as authSchema from "@/server/db/schema/auth";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { headers } from "next/headers";
 import { db } from "./db/db";
 
 export const auth = betterAuth({
@@ -44,11 +44,17 @@ export type User =
   | typeof authSchema.users.$inferSelect
   | typeof auth.$Infer.Session.user;
 
-const getSession = async () =>
-  auth.api.getSession({
-    headers: await headers(),
-  });
-
 /** Returns the current logged in user. Works for Server actions and Server components */
-export const getUser = async (): Promise<User | undefined> =>
-  (await getSession())?.user;
+export const getUser = async (): Promise<User | undefined> => {
+  const { headers } = await import("next/headers");
+
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+    return session?.user;
+  } catch (error) {
+    console.error("Failed to get user session:", error);
+    return undefined;
+  }
+};
