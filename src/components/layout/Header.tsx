@@ -19,8 +19,7 @@ export function Header() {
         <NavigationMenu className="px-8">
           <NavigationMenuList>
             {[
-              { name: "Events", href: "/" },
-              // { name: "Teams", href: "/teams" },
+              { name: "Events", href: "/event-list" },
               { name: "About", href: "/about" },
             ].map((item) => (
               <NavigationMenuItem key={item.href}>
