@@ -1,8 +1,12 @@
 "use server";
 
 import { db } from "@/server/db/db";
-import { events } from "@/server/db/schema/event";
 
 export async function getEventList() {
-  return await db.select().from(events);
+  return await db.query.events.findMany({
+    orderBy: (events, { asc }) => [
+      asc(events.startDate),
+      asc(events.createdAt),
+    ],
+  });
 }
