@@ -22,18 +22,9 @@ export function PaginationButton({
     if (disabled) return;
 
     const nextPage = direction === "next" ? currentPage + 1 : currentPage - 1;
-    const params = new URLSearchParams();
+    const queryString = searchQuery ? `?query=${encodeURIComponent(searchQuery)}` : '';
 
-    if (nextPage > 1) {
-      params.set("page", nextPage.toString());
-    }
-
-    if (searchQuery) {
-      params.set("query", searchQuery);
-    }
-
-    const queryString = params.toString();
-    router.push(`?${queryString}`);
+    router.push(`/page/${nextPage}${queryString}`);
   };
 
   return direction === "next" ? (
