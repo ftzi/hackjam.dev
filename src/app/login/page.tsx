@@ -3,8 +3,10 @@ import { Suspense } from "react";
 
 export default function Page() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Login />
-    </Suspense>
+    <div className="flex justify-center items-center h-screen pb-24">
+      <Suspense fallback={<div>Loading...</div>}>
+        <Login />
+      </Suspense>
+    </div>
   );
 }
