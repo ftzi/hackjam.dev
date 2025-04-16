@@ -51,7 +51,7 @@ export function CreateEventForm({ onSuccess }: { onSuccess?: () => void }) {
 
       if (result.success) {
         toast.success("Event has been created", {
-          description: "Your hackathon event has been created successfully.",
+          description: "Your Hackathon event has been successfully created.",
         });
         onSuccess?.();
       }

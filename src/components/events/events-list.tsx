@@ -125,16 +125,13 @@ export default async function EventsList({
                       </div>
                     </div>
                   </CardContent>
-                  <CardFooter className="flex justify-end pt-3">
-                    {user?.id === event.createdBy ? (
-                      <Button variant="default" size="sm">
-                        Manage
-                      </Button>
-                    ) : (
-                      <Button variant="default" size="sm">
-                        Register
-                      </Button>
-                    )}
+                  <CardFooter className="flex justify-between flex-row-reverse pt-3">
+                    <span>{"See Details →"}</span>
+                    <div className="flex items-center space-x-2">
+                      {user?.id === event.createdBy && (
+                        <Badge variant={"secondary"}>Your event</Badge>
+                      )}
+                    </div>
                   </CardFooter>
                 </Card>
               </Link>
@@ -159,7 +156,7 @@ export default async function EventsList({
                       <PaginationEllipsis />
                     ) : (
                       <PaginationLink
-                        href={`?page=${item.page}${searchQuery ? `&query=${searchQuery}` : ''}`}
+                        href={`?page=${item.page}${searchQuery ? `&query=${searchQuery}` : ""}`}
                         isActive={item.page === currentPage}
                       >
                         {item.page}
