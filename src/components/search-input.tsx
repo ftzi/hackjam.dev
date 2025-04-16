@@ -3,7 +3,7 @@
 import { Input } from "@/components/ui/input";
 import { useDebounce } from "@/hooks/use-debounce";
 import { Search } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface SearchInputProps {
@@ -12,22 +12,15 @@ interface SearchInputProps {
 
 export default function SearchInput({ defaultValue }: SearchInputProps) {
   const router = useRouter();
-  const pathname = usePathname();
   const [searchQuery, setSearchQuery] = useState(defaultValue);
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-
-    if (debouncedSearchQuery) {
-      params.set("query", debouncedSearchQuery);
-      params.set("page", "1"); // Reset to first page on new search
-    } else {
-      params.delete("query");
+    if (debouncedSearchQuery !== defaultValue) {
+      const queryString = debouncedSearchQuery ? `?query=${encodeURIComponent(debouncedSearchQuery)}` : '';
+      router.push(`/page/1${queryString}`);
     }
-
-    router.replace(`${pathname}?${params.toString()}`);
-  }, [debouncedSearchQuery, router, pathname]);
+  }, [debouncedSearchQuery, router, defaultValue]);
 
   return (
     <>
