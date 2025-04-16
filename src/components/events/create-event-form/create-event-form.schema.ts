@@ -19,9 +19,13 @@ export const formSchema = z.object({
   maxTeamMembers: z.coerce.number().int().min(1, {
     message: "Participants per team must be at least 1.",
   }),
-  registrationDeadline: z.date({
-    required_error: "Registration deadline is required.",
-  }),
+  registrationDeadline: z
+    .date({
+      required_error: "Registration deadline is required.",
+    })
+    .min(new Date(), {
+      message: "Registration deadline must be in the future.",
+    }),
 });
 
 export type FormValues = z.infer<typeof formSchema>;
