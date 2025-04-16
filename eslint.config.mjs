@@ -37,6 +37,9 @@ const eslintConfig = [
           args: "after-used",
         },
       ],
+      "a11y": {
+        "useValidAriaRole": "warn",
+      }
     },
   },
 ];
