@@ -121,16 +121,13 @@ export default async function EventList({ events, currentPage, searchQuery, tota
                         </div>
                       </div>
                     </CardContent>
-                    <CardFooter className="flex justify-end pt-3">
-                      {user?.id === event.createdBy ? (
-                        <Button variant="default" size="sm">
-                          Manage
-                        </Button>
-                      ) : (
-                        <Button variant="default" size="sm">
-                          Subscribe
-                        </Button>
-                      )}
+                    <CardFooter className="flex justify-between flex-row-reverse pt-3">
+                      <span>{"See Details →"}</span>
+                      <div className="flex items-center space-x-2">
+                        {user?.id === event.createdBy && (
+                          <Badge variant={"secondary"}>Your event</Badge>
+                        )}
+                      </div>
                     </CardFooter>
                   </Card>
                 </Link>
