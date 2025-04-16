@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { authClient } from "@/lib/auth-client";
+import { mainPage } from "@/lib/consts";
 import type { User } from "@/server/auth";
 import Link from "next/link";
 

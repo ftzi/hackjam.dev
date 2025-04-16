@@ -1,5 +1,6 @@
 "use server";
 
+import { mainPage } from "@/lib/consts";
 import { type User, getUser } from "@/server/auth";
 import { db } from "@/server/db/db";
 import { events, type Event } from "@/server/db/schema/event";

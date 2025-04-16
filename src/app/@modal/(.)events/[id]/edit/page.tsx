@@ -3,6 +3,7 @@ import { events } from "@/server/db/schema/event";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { EventEditDialog } from "./dialog";
+import { mainPage } from "@/lib/consts";
 
 export default async function Page({
   params,
