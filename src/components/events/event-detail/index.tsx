@@ -312,11 +312,6 @@ export default function EventDetail({
                     Edit Event
                   </Button>
 
-                  <Button className="w-full" variant="outline">
-                    <Users className="mr-2 h-4 w-4" />
-                    Manage Teams
-                  </Button>
-
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button className="w-full" variant="destructive">
