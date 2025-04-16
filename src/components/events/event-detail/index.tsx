@@ -23,6 +23,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { User } from "@/server/auth";
 import type { Event } from "@/server/db/schema/event";
+import type { Team } from "@/server/db/schema/team";
 import { format } from "date-fns";
 import {
   ArrowLeft,
@@ -35,10 +36,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
-import {
-  deregisterOwnTeamFromEvent,
-  registerOwnTeamToEvent,
-} from "../utils";
+import { deregisterOwnTeamFromEvent, registerOwnTeamToEvent } from "../utils";
 
 // type Prize = {
 //   place: string;
@@ -73,10 +71,16 @@ export default function EventDetail({
   event,
   user,
   userIsLeaderAndRegistered,
-}: { event: Event; user?: User; userIsLeaderAndRegistered?: boolean }) {
+  teams,
+  teamsCount,
+}: {
+  event: Event;
+  user?: User;
+  userIsLeaderAndRegistered?: boolean;
+  teams: Team[] | undefined;
+  teamsCount: number;
+}) {
   const isCreator = event.createdBy === user?.id;
-
-  const registeredTeams = "TODO";
 
   const formatDate = (date: Date) => {
     return format(date, "PPP");
@@ -138,7 +142,7 @@ export default function EventDetail({
                   <div>
                     <p className="text-sm font-medium">Teams</p>
                     <p className="text-sm text-muted-foreground">
-                      {registeredTeams}/{event.maxTeams} teams registered
+                      {teamsCount}/{event.maxTeams} teams registered
                     </p>
                   </div>
                 </div>
@@ -147,10 +151,10 @@ export default function EventDetail({
           </Card>
 
           <Tabs defaultValue="rules" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className={`grid w-full grid-cols-${isCreator ? 3 : 2}`}>
               <TabsTrigger value="rules">Rules</TabsTrigger>
               <TabsTrigger value="schedule">Schedule</TabsTrigger>
-              {/* <TabsTrigger value="prizes">Prizes</TabsTrigger> */}
+              {isCreator && <TabsTrigger value="teams">Teams</TabsTrigger>}
             </TabsList>
 
             <TabsContent value="rules" className="space-y-4 pt-4">
@@ -229,6 +233,30 @@ export default function EventDetail({
                 </CardContent>
               </Card>
             </TabsContent>
+
+            {teams && (
+              <TabsContent value="teams" className="space-y-4 pt-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Registered Teams</CardTitle>
+                    <CardDescription>
+                      List of teams registered for the event
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {teams.map((team, index) => (
+                      <div
+                        key={JSON.stringify({ team, index })}
+                        className="flex items-center justify-between py-2 border-b border-border"
+                      >
+                        <span>{team.name}</span>
+                        <Button variant="outline">View Team</Button>
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            )}
 
             {/* <TabsContent value="prizes" className="space-y-4 pt-4">
               <Card>
@@ -368,7 +396,7 @@ export default function EventDetail({
                     Teams Registered
                   </span>
                   <span className="font-medium">
-                    {registeredTeams}/{event.maxTeams}
+                    {teamsCount}/{event.maxTeams}
                   </span>
                 </div>
                 {/* <div className="h-2 w-full bg-muted rounded-full overflow-hidden">

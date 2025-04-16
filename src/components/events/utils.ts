@@ -3,14 +3,30 @@
 import { type User, getUser } from "@/server/auth";
 import { db } from "@/server/db/db";
 import type { Event } from "@/server/db/schema/event";
-import { teams } from "@/server/db/schema/team";
-import { eq } from "drizzle-orm";
+import { type Team, teams } from "@/server/db/schema/team";
+import { count, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export const revalidateEvent = async (event: Event) => {
   revalidatePath(`/events/${event.id}`);
   revalidatePath("/");
+};
+
+export const getTeamsForEvent = async (event: Event): Promise<Array<Team>> => {
+  const teams = await db.query.teams.findMany({
+    where: (teams, { eq }) => eq(teams.eventId, event.id),
+  });
+
+  return teams;
+};
+
+export const getTeamsCountForEvent = async (event: Event): Promise<number> => {
+  const result = await db
+    .select({ count: count() })
+    .from(teams)
+    .where(eq(teams.eventId, event.id));
+  return result[0]?.count ?? 0;
 };
 
 export const isTeamLeaderRegisteredToEvent = async ({

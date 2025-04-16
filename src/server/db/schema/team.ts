@@ -14,6 +14,8 @@ export const teams = pgTable("team", {
     .references(() => events.id),
 });
 
+export type Team = typeof teams.$inferSelect;
+
 export const teamMember = pgTable(
   "team_member",
   {
