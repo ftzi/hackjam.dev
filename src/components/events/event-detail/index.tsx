@@ -168,10 +168,10 @@ export default function EventDetail({ event }: { event: Event }) {
           </Card>
 
           <Tabs defaultValue="rules" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="rules">Rules</TabsTrigger>
               <TabsTrigger value="schedule">Schedule</TabsTrigger>
-              <TabsTrigger value="prizes">Prizes</TabsTrigger>
+              {/* <TabsTrigger value="prizes">Prizes</TabsTrigger> */}
             </TabsList>
 
             <TabsContent value="rules" className="space-y-4 pt-4">
