@@ -33,7 +33,7 @@ export default async function PaginatedEventsPage({ params, searchParams }: Page
   });
 
   if (Number.isNaN(pageNumber) || pageNumber < 1) {
-    redirect("/page/1");
+    redirect("/event-list/1");
   }
 
   return (
