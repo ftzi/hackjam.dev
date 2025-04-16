@@ -1,4 +1,3 @@
-
 export default function CreateEventPage() {
-  return null
+  return null;
 }

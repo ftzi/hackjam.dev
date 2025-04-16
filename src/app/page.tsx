@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { CreateEventButton } from "@/components/events/create-event-button";
 import EventsList from "@/components/events/events-list";
 import { Input } from "@/components/ui/input";
@@ -6,8 +6,8 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [currentPage, setCurrentPage] = useState(1)
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -31,15 +31,19 @@ export default function Home() {
                   className="w-full pl-8"
                   value={searchQuery}
                   onChange={(e) => {
-                    setSearchQuery(e.target.value)
-                    setCurrentPage(1) // Reset to first page on search
+                    setSearchQuery(e.target.value);
+                    setCurrentPage(1); // Reset to first page on search
                   }}
                 />
               </div>
               <CreateEventButton />
             </div>
           </div>
-          <EventsList searchQuery={searchQuery} currentPage={currentPage} onPageChange={setCurrentPage} />
+          <EventsList
+            searchQuery={searchQuery}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
         </div>
       </section>
     </div>

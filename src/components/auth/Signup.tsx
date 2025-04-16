@@ -12,11 +12,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth-client";
 import { Loader2 } from "lucide-react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { PasswordInput } from "../ui/password-input";
-import Link from "next/link";
 
 export const SignUpContent = () => {
   const [name, setFirstName] = useState("");
@@ -49,7 +49,7 @@ export const SignUpContent = () => {
         onSuccess: async () => {
           router.push(successUrl);
         },
-      }
+      },
     );
   };
 

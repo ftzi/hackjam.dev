@@ -54,24 +54,24 @@ export const AuthSection = () => {
   return (
     <div
       className={`flex justify-end transition-opacity duration-300 min-w-[200px] ${
-      !session.isPending ? "opacity-100" : "opacity-0"
+        !session.isPending ? "opacity-100" : "opacity-0"
       }`}
     >
       {session.data ? (
-      <div className="flex justify-end w-full">
-        <AccountDropdownMenu user={session.data.user} />
-      </div>
-      ) : (
-      <div className="flex items-center justify-end w-full">
-        <div className="flex gap-2">
-        <Button variant="outline" asChild>
-          <Link href="/login">Login</Link>
-        </Button>
-        <Button asChild>
-          <Link href="/signup">Sign Up</Link>
-        </Button>
+        <div className="flex justify-end w-full">
+          <AccountDropdownMenu user={session.data.user} />
         </div>
-      </div>
+      ) : (
+        <div className="flex items-center justify-end w-full">
+          <div className="flex gap-2">
+            <Button variant="outline" asChild>
+              <Link href="/login">Login</Link>
+            </Button>
+            <Button asChild>
+              <Link href="/signup">Sign Up</Link>
+            </Button>
+          </div>
+        </div>
       )}
     </div>
   );

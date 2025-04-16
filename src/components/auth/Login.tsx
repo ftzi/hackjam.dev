@@ -11,12 +11,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { authClient } from "../../lib/auth-client";
 import { PasswordInput } from "../ui/password-input";
-import { useSearchParams } from "next/navigation";
-import Link from "next/link";
 
 export const LoginContent = () => {
   const [email, setEmail] = useState("");
@@ -46,7 +46,7 @@ export const LoginContent = () => {
             description: ctx.error.message ?? ctx.error.statusText,
           });
         },
-      }
+      },
     );
   };
 
