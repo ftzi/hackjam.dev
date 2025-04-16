@@ -26,15 +26,19 @@ import type { Event } from "@/server/db/schema/event";
 import { format } from "date-fns";
 import {
   ArrowLeft,
-  Calendar,
   CalendarDays,
   Clock,
   Edit,
+  Share2,
   Trash2,
   Users,
 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { toast } from "sonner";
+import {
+  deregisterOwnTeamFromEvent,
+  registerOwnTeamToEvent,
+} from "../utils";
 
 // type Prize = {
 //   place: string;
@@ -68,10 +72,8 @@ import { useState } from "react";
 export default function EventDetail({
   event,
   user,
-}: { event: Event; user?: User }) {
-  // In a real app, you would check if the current user is the creator
-  // For demo purposes, we'll use a toggle to simulate different user roles
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  userIsLeaderAndRegistered,
+}: { event: Event; user?: User; userIsLeaderAndRegistered?: boolean }) {
   const isCreator = event.createdBy === user?.id;
 
   const registeredTeams = "TODO";
@@ -167,27 +169,10 @@ export default function EventDetail({
                         <li>
                           Maximum {event.maxTeamMembers} participants per team
                         </li>
-                        <li>Minimum 2 participants required to form a team</li>
-                        <li>All team members must register individually</li>
-                      </ul>
-                    </div>
-
-                    <div className="space-y-2">
-                      <h3 className="font-medium">Submission Requirements</h3>
-                      <ul className="list-disc pl-5 text-sm text-muted-foreground">
-                        <li>Working prototype or MVP</li>
-                        <li>Source code must be available for judging</li>
-                        <li>5-minute presentation/demo</li>
-                      </ul>
-                    </div>
-
-                    <div className="space-y-2">
-                      <h3 className="font-medium">Judging Criteria</h3>
-                      <ul className="list-disc pl-5 text-sm text-muted-foreground">
-                        <li>Innovation and creativity (30%)</li>
-                        <li>Technical implementation (30%)</li>
-                        <li>Design and user experience (20%)</li>
-                        <li>Business potential (20%)</li>
+                        <li>Only the team leader registers</li>
+                        <li>
+                          The other members must be listed when submitting
+                        </li>
                       </ul>
                     </div>
 
@@ -328,10 +313,18 @@ export default function EventDetail({
                 <div className="space-y-4">
                   <Button
                     className="w-full"
-                    variant={isSubscribed ? "outline" : "default"}
-                    onClick={() => setIsSubscribed(!isSubscribed)}
+                    variant={
+                      userIsLeaderAndRegistered ? "destructive" : "default"
+                    }
+                    onClick={() => {
+                      if (userIsLeaderAndRegistered)
+                        deregisterOwnTeamFromEvent({ event });
+                      else registerOwnTeamToEvent({ event });
+                    }}
                   >
-                    {isSubscribed ? "Unsubscribe" : "Subscribe to Event"}
+                    {userIsLeaderAndRegistered
+                      ? "Deregister Team"
+                      : "Register Team"}
                   </Button>
 
                   {/* {event.status === "upcoming" && (
@@ -341,10 +334,24 @@ export default function EventDetail({
                     </Button>
                   )} */}
 
-                  <Button className="w-full" variant="outline">
+                  <Button
+                    className="w-full"
+                    variant="outline"
+                    onClick={() => {
+                      navigator.clipboard.writeText(
+                        `${window.location.origin}/events/${event.id}`,
+                      );
+                      toast.success("Event link copied to clipboard!");
+                    }}
+                  >
+                    <Share2 className="mr-2 h-4 w-4" />
+                    Copy Event Link
+                  </Button>
+
+                  {/* <Button className="w-full" variant="outline">
                     <Calendar className="mr-2 h-4 w-4" />
                     Add to Calendar
-                  </Button>
+                  </Button> */}
                 </div>
               )}
             </CardContent>

@@ -132,7 +132,7 @@ export default async function EventsList({
                       </Button>
                     ) : (
                       <Button variant="default" size="sm">
-                        Subscribe
+                        Register
                       </Button>
                     )}
                   </CardFooter>
