@@ -29,8 +29,6 @@ interface EventListProps {
 }
 
 export default async function EventList({ events, currentPage, searchQuery, totalPages }: EventListProps) {
-  console.log("🚀 ~ EventList ~ totalPages:", totalPages)
-  console.log("🚀 ~ EventList ~ currentPage:", currentPage)
   const user = await getUserAction();
 
   const generatePaginationItems = () => {
