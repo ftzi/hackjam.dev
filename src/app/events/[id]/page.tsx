@@ -14,9 +14,10 @@ import { Suspense } from "react";
 
 export default async function EventPage({
   params,
-}: { params: { id: string } }) {
+}: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const event = await db.query.events.findFirst({
-    where: eq(events.id, params.id),
+    where: eq(events.id, id),
   });
 
   if (!event) notFound();
