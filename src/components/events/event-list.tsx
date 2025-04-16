@@ -20,6 +20,7 @@ import {
   PaginationLink,
 } from "../ui/pagination";
 import { PaginationButton } from "./pagination-button";
+import { getTeamsCountForEvent } from "./utils";
 
 interface EventListProps {
   events: Event[];
@@ -79,53 +80,64 @@ export default async function EventList({ events, currentPage, searchQuery, tota
       ) : (
         <>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {events.map((event) => (
-              <Link
-                href={`/events/${event.id}`}
-                key={event.id}
-                className="block transition-all duration-200"
-              >
-                <Card className="overflow-hidden py-8 px-2 h-full cursor-pointer transition-all duration-200 hover:shadow-md hover:bg-accent/5 hover:scale-[1.02] border-2 border-transparent hover:border-accent/20">
-                  <CardHeader className="pb-3">
-                    <div className="flex justify-between items-start">
-                      <CardTitle className="text-xl">{event.name}</CardTitle>
-                      <EventStatusBadge
-                        startDate={event.startDate}
-                        endDate={event.endDate}
-                      />
-                    </div>
-                    <CardDescription className="line-clamp-2">
-                      {event.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="pb-3">
-                    <div className="space-y-2 text-sm">
-                      <div className="flex items-center">
-                        <CalendarDays className="mr-2 h-4 w-4 opacity-70" />
-                        <span>
-                          {new Date(event.startDate).toLocaleDateString()} -{" "}
-                          {new Date(event.endDate).toLocaleDateString()}
-                        </span>
+            {events.map((event) => {
+              const registeredTeams = getTeamsCountForEvent(event);
+              return (
+                <Link
+                  href={`/events/${event.id}`}
+                  key={event.id}
+                  className="block transition-all duration-200"
+                >
+                  <Card className="overflow-hidden py-8 px-2 h-full cursor-pointer transition-all duration-200 hover:shadow-md hover:bg-accent/5 hover:scale-[1.02] border-2 border-transparent hover:border-accent/20">
+                    <CardHeader className="pb-3">
+                      <div className="flex justify-between items-start">
+                        <CardTitle className="text-xl">{event.name}</CardTitle>
+                        <EventStatusBadge
+                          startDate={event.startDate}
+                          endDate={event.endDate}
+                        />
                       </div>
-                      <div className="flex items-center">
-                        <Users className="mr-2 h-4 w-4 opacity-70" />
+                      <CardDescription className="line-clamp-2">
+                        {event.description}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="pb-3">
+                      <div className="space-y-2 text-sm">
+                        <div className="flex items-center">
+                          <CalendarDays className="mr-2 h-4 w-4 opacity-70" />
+                          <span>
+                            {new Date(event.startDate).toLocaleDateString()} -{" "}
+                            {new Date(event.endDate).toLocaleDateString()}
+                          </span>
+                        </div>
+                        <div className="flex items-center">
+                          <Users className="mr-2 h-4 w-4 opacity-70" />
+                          <span>
+                            Teams: {registeredTeams}/{event.maxTeams}{" "}
+                            {event.maxTeamMembers
+                              ? `(max ${event.maxTeamMembers} members per team)`
+                              : undefined}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  </CardContent>
-                  <CardFooter className="flex justify-end pt-3">
-                    {user?.id === event.createdBy ? (
-                      <Button variant="default" size="sm">
-                        Manage
-                      </Button>
-                    ) : (
-                      <Button variant="default" size="sm">
-                        Subscribe
-                      </Button>
-                    )}
-                  </CardFooter>
-                </Card>
-              </Link>
-            ))}
+                    </CardContent>
+                    <CardFooter className="flex justify-end pt-3">
+                      {user?.id === event.createdBy ? (
+                        <Button variant="default" size="sm">
+                          Manage
+                        </Button>
+                      ) : (
+                        <Button variant="default" size="sm">
+                          Subscribe
+                        </Button>
+                      )}
+                    </CardFooter>
+                  </Card>
+                </Link>
+              )
+            }
+
+            )}
           </div>
 
           <Pagination className="mt-8">
