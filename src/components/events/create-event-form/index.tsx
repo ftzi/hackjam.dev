@@ -23,7 +23,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -71,8 +70,6 @@ export function CreateEventForm({ onSuccess }: { onSuccess?: () => void }) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-6 sm:max-w-[600px] max-h-[90vh] overflow-y-auto"
       >
-
-
         <FormField
           control={form.control}
           name="name"
@@ -230,7 +227,6 @@ export function CreateEventForm({ onSuccess }: { onSuccess?: () => void }) {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="maxTeamMembers"
@@ -247,12 +243,7 @@ export function CreateEventForm({ onSuccess }: { onSuccess?: () => void }) {
               </FormItem>
             )}
           />
-
-
         </div>
-
-
-
         <DialogFooter>
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Creating..." : "Create Hackathon"}
