@@ -157,10 +157,9 @@ export default function EventDetail({
 
           <Tabs defaultValue="rules" className="w-full">
             <TabsList
-              className={`grid w-full ${isCreator ? "grid-cols-3" : "grid-cols-2"} `}
+              className={`grid w-full ${isCreator ? "grid-cols-2" : "grid-cols-1"} `}
             >
               <TabsTrigger value="rules">Rules</TabsTrigger>
-              <TabsTrigger value="schedule">Schedule</TabsTrigger>
               {isCreator && <TabsTrigger value="teams">Teams</TabsTrigger>}
             </TabsList>
 
@@ -213,31 +212,6 @@ export default function EventDetail({
                     Detailed timeline of activities during the hackathon
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
-                    {/* {event.schedule.map((item, index) => (
-                      <div
-                        key={JSON.stringify({ item, index })}
-                        className="flex"
-                      >
-                        <div className="mr-4 flex flex-col items-center">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-full border border-primary">
-                            <Calendar className="h-5 w-5 text-primary" />
-                          </div>
-                          {index < event.schedule.length - 1 && (
-                            <div className="h-full w-px bg-border" />
-                          )}
-                        </div>
-                        <div className="space-y-1 pb-8">
-                          <h3 className="text-lg font-medium">{item.day}</h3>
-                          <p className="text-sm text-muted-foreground">
-                            {item.description}
-                          </p>
-                        </div>
-                      </div>
-                    ))} */}
-                  </div>
-                </CardContent>
               </Card>
             </TabsContent>
 
@@ -257,7 +231,6 @@ export default function EventDetail({
                         className="flex items-center justify-between py-2 border-b border-border"
                       >
                         <span>{team.name}</span>
-                        <Button variant="outline">View Team</Button>
                       </div>
                     ))}
                   </CardContent>
