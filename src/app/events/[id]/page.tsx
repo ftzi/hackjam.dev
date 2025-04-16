@@ -1,5 +1,6 @@
 import EventDetail from "@/components/events/event-detail";
 import EventDetailSkeleton from "@/components/events/event-detail/skeleton";
+import { getUser } from "@/server/auth";
 import { db } from "@/server/db/db";
 import { events } from "@/server/db/schema/event";
 import { eq } from "drizzle-orm";
@@ -15,12 +16,14 @@ export default async function EventPage({
 
   if (!event) notFound();
 
+  const user = await getUser()
+
   return (
     <div className="flex min-h-screen flex-col items-center">
       <main className="flex-1">
         <div className="container py-6 md:py-12">
           <Suspense fallback={<EventDetailSkeleton />}>
-            <EventDetail event={event} />
+            <EventDetail event={event} user={user}/>
           </Suspense>
         </div>
       </main>

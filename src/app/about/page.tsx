@@ -18,18 +18,18 @@ export default function AboutPage() {
       github: "ftzi",
     },
     {
-      name: "Raphael Novello",
-      role: "UI/UX Developer",
-      description:
-        "Creative mind focused on crafting beautiful and functional user interfaces.",
-      github: "RaphaelAN",
-    },
-    {
       name: "Thiago Murtinho",
       role: "Backend Engineer",
       description:
         "Technical expert specializing in robust and scalable backend architectures.",
       github: "thiagomurtinho",
+    },
+    {
+      name: "Raphael Novello",
+      role: "UI/UX Developer",
+      description:
+        "Creative mind focused on crafting beautiful and functional user interfaces.",
+      github: "RaphaelAN",
     },
   ];
 

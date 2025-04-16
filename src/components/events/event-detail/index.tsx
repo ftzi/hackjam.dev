@@ -20,9 +20,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { User } from "@/server/auth";
 import type { Event } from "@/server/db/schema/event";
 import { format } from "date-fns";
 import {
@@ -66,31 +65,19 @@ import { useState } from "react";
 //   schedule: ScheduleItem[];
 // };
 
-export default function EventDetail({ event }: { event: Event }) {
+export default function EventDetail({
+  event,
+  user,
+}: { event: Event; user?: User }) {
   // In a real app, you would check if the current user is the creator
   // For demo purposes, we'll use a toggle to simulate different user roles
-  const [isCreator, setIsCreator] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const isCreator = event.createdBy === user?.id;
 
   const registeredTeams = "TODO";
 
   const formatDate = (date: Date) => {
     return format(date, "PPP");
-  };
-
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "upcoming":
-        return (
-          <Badge className="bg-green-500 hover:bg-green-600">Upcoming</Badge>
-        );
-      case "draft":
-        return <Badge variant="outline">Draft</Badge>;
-      case "completed":
-        return <Badge variant="secondary">Completed</Badge>;
-      default:
-        return null;
-    }
   };
 
   return (
@@ -108,16 +95,6 @@ export default function EventDetail({ event }: { event: Event }) {
             <h1 className="text-3xl font-bold tracking-tight">{event.name}</h1>
             {/* {getStatusBadge(event.status)} */}
           </div>
-        </div>
-
-        {/* Demo toggle for creator/participant view */}
-        <div className="flex items-center space-x-2 bg-muted p-2 rounded-md">
-          <Switch
-            id="creator-mode"
-            checked={isCreator}
-            onCheckedChange={setIsCreator}
-          />
-          <Label htmlFor="creator-mode">View as creator</Label>
         </div>
       </div>
 
