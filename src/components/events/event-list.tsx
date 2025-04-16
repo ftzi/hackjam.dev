@@ -1,5 +1,4 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -30,6 +29,8 @@ interface EventListProps {
 }
 
 export default async function EventList({ events, currentPage, searchQuery, totalPages }: EventListProps) {
+  console.log("🚀 ~ EventList ~ totalPages:", totalPages)
+  console.log("🚀 ~ EventList ~ currentPage:", currentPage)
   const user = await getUserAction();
 
   const generatePaginationItems = () => {
@@ -144,7 +145,7 @@ export default async function EventList({ events, currentPage, searchQuery, tota
                   direction="previous"
                   disabled={currentPage === 1}
                   currentPage={currentPage}
-                  searchQuery={searchQuery}
+                  searchQuery={searchQuery || ""}
                 />
               </PaginationItem>
 
