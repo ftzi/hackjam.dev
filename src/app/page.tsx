@@ -25,7 +25,7 @@ export default function Home() {
               Next.js 15 and integrated with Supabase, Better Auth, OpenAI, and Sentry.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
-              <Button asChild size="lg" className="h-12 px-8">
+              <Button asChild size="lg" className="h-12 px-8 pl-3">
                 <Link href="/event-list">
                   Get Started
                   <ArrowRight className="ml-2 h-4 w-4" />
