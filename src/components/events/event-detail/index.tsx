@@ -156,7 +156,9 @@ export default function EventDetail({
           </Card>
 
           <Tabs defaultValue="rules" className="w-full">
-            <TabsList className={`grid w-full grid-cols-${isCreator ? 3 : 2}`}>
+            <TabsList
+              className={`grid w-full ${isCreator ? "grid-cols-3" : "grid-cols-2"} `}
+            >
               <TabsTrigger value="rules">Rules</TabsTrigger>
               <TabsTrigger value="schedule">Schedule</TabsTrigger>
               {isCreator && <TabsTrigger value="teams">Teams</TabsTrigger>}

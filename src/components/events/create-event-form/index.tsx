@@ -54,7 +54,7 @@ export function CreateEventForm({ onSuccess }: { onSuccess?: () => void }) {
         });
         onSuccess?.();
       }
-    } catch (_) {
+    } catch {
       toast.error("Failed to create event", {
         description:
           "There was an error creating your event. Please try again.",
@@ -236,9 +236,7 @@ export function CreateEventForm({ onSuccess }: { onSuccess?: () => void }) {
                 <FormControl>
                   <Input type="number" min={1} {...field} />
                 </FormControl>
-                <FormDescription>
-                  Maximum participants per team
-                </FormDescription>
+                <FormDescription>Maximum participants per team</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
