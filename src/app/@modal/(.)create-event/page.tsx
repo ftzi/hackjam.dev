@@ -7,6 +7,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { mainPage } from "@/lib/consts";
 import { useRouter } from "next/navigation";
 
 export default function Page() {
@@ -16,7 +17,7 @@ export default function Page() {
     <Dialog
       open
       onOpenChange={(open) => {
-        if (!open) router.push("/");
+        if (!open) router.push(mainPage);
       }}
     >
       <DialogContent
@@ -30,7 +31,7 @@ export default function Page() {
           Fill in the details below to create a new hackathon event. Click save
           when you're done.
         </DialogDescription>
-        <EventForm onSuccess={() => router.push("/")} />
+        <EventForm onSuccess={() => router.push(mainPage)} />
       </DialogContent>
     </Dialog>
   );

@@ -13,7 +13,7 @@ export default async function Page({
     where: eq(events.id, (await params).id),
   });
 
-  if (!event) redirect("/");
+  if (!event) redirect(mainPage);
 
   return <EventEditDialog event={event} />;
 }

@@ -9,6 +9,7 @@ import { Logo } from "@/components/utils/Logo";
 import Link from "next/link";
 import React from "react";
 import { AuthSection } from "./AuthSection";
+import { mainPage } from "@/lib/consts";
 
 export function Header() {
   return (
@@ -19,7 +20,7 @@ export function Header() {
         <NavigationMenu className="px-8">
           <NavigationMenuList>
             {[
-              { name: "Events", href: "/event-list" },
+              { name: "Events", href: mainPage },
               { name: "About", href: "/about" },
             ].map((item) => (
               <NavigationMenuItem key={item.href}>

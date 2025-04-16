@@ -5,3 +5,5 @@ export const env = {
       ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` // Preview URL automatically set by Vercel
       : "http://localhost:3000"), // Local Development URL
 };
+
+export const mainPage = "/events-list/1";

@@ -24,7 +24,7 @@ export const SignUpContent = () => {
   const [password, setPassword] = useState("");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const successUrl = useSearchParams().get("redirect") || "/";
+  const successUrl = useSearchParams().get("redirect") || mainPage;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

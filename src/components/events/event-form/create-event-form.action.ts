@@ -27,5 +27,5 @@ export async function createEventAction(values: EventFormValues) {
     })
     .returning();
 
-  revalidatePath("/");
+  revalidatePath(mainPage);
 }

@@ -10,7 +10,7 @@ import { redirect } from "next/navigation";
 
 export const revalidateEvent = async (eventId: string) => {
   revalidatePath(`/events/${eventId}`);
-  revalidatePath("/");
+  revalidatePath(mainPage);
 };
 
 export const getTeamsForEvent = async (event: Event): Promise<Array<Team>> => {
@@ -87,7 +87,7 @@ export const deleteEvent = async ({
   const user = await getUser();
   if (!user) redirect("/signup");
 
-  if (user.id !== event.createdBy) redirect("/");
+  if (user.id !== event.createdBy) redirect(mainPage);
 
   await db.delete(events).where(eq(events.id, event.id));
 

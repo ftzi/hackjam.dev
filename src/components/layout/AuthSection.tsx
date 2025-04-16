@@ -19,7 +19,7 @@ export const SignoutMenuItem = () => {
         authClient.signOut({
           fetchOptions: {
             onSuccess: () => {
-              window.location.href = "/";
+              window.location.href = mainPage;
             },
           },
         })

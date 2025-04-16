@@ -22,10 +22,12 @@ export function PaginationButton({
     if (disabled) return;
 
     const nextPage = direction === "next" ? currentPage + 1 : currentPage - 1;
-    const queryString = searchQuery ? `?query=${encodeURIComponent(searchQuery)}` : "";
+    const queryString = searchQuery
+      ? `?query=${encodeURIComponent(searchQuery)}`
+      : "";
 
     console.log("Navigating to page:", nextPage, "with query:", queryString); // Debugging log
-    router.push(`/event-list/${nextPage}${queryString}`);
+    router.push(`/events-list/${nextPage}${queryString}`);
   };
 
   return direction === "next" ? (

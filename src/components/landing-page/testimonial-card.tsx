@@ -1,14 +1,19 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 interface TestimonialCardProps {
-  quote: string
-  author: string
-  role$: string
-  avatarSrc: string
+  quote: string;
+  author: string;
+  role$: string;
+  avatarSrc: string;
 }
 
-export function TestimonialCard({ quote, author, role$, avatarSrc }: TestimonialCardProps) {
+export function TestimonialCard({
+  quote,
+  author,
+  role$,
+  avatarSrc,
+}: TestimonialCardProps) {
   return (
     <Card className="h-full flex flex-col">
       <CardContent className="pt-6 flex-1">
@@ -28,5 +33,5 @@ export function TestimonialCard({ quote, author, role$, avatarSrc }: Testimonial
         </div>
       </CardFooter>
     </Card>
-  )
+  );
 }

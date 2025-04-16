@@ -20,6 +20,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { mainPage } from "@/lib/consts";
 import type { User } from "@/server/auth";
 import type { Event } from "@/server/db/schema/event";
 import type { Team } from "@/server/db/schema/team";
@@ -96,7 +97,7 @@ export default function EventDetail({
       <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
         <div>
           <Link
-            href="/"
+            href={mainPage}
             className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-2"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -312,7 +313,7 @@ export default function EventDetail({
                           onClick={async () => {
                             await deleteEvent({ event });
                             toast.success("Event deleted successfully!");
-                            router.push("/");
+                            router.push(mainPage);
                           }}
                         >
                           Delete

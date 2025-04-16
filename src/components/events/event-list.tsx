@@ -28,7 +28,12 @@ interface EventListProps {
   totalPages: number;
 }
 
-export default async function EventList({ events, currentPage, searchQuery, totalPages }: EventListProps) {
+export default async function EventList({
+  events,
+  currentPage,
+  searchQuery,
+  totalPages,
+}: EventListProps) {
   const user = await getUserAction();
 
   const generatePaginationItems = () => {
@@ -130,10 +135,8 @@ export default async function EventList({ events, currentPage, searchQuery, tota
                     </CardFooter>
                   </Card>
                 </Link>
-              )
-            }
-
-            )}
+              );
+            })}
           </div>
 
           <Pagination className="mt-8">
@@ -153,7 +156,7 @@ export default async function EventList({ events, currentPage, searchQuery, tota
                     <PaginationEllipsis />
                   ) : (
                     <PaginationLink
-                      href={`/event-list/${item.page}${searchQuery ? `?query=${encodeURIComponent(searchQuery)}` : ''}`}
+                      href={`/events-list/${item.page}${searchQuery ? `?query=${encodeURIComponent(searchQuery)}` : ""}`}
                       isActive={item.page === currentPage}
                     >
                       {item.page}
@@ -172,7 +175,6 @@ export default async function EventList({ events, currentPage, searchQuery, tota
               </PaginationItem>
             </PaginationContent>
           </Pagination>
-
         </>
       )}
     </section>

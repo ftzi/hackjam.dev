@@ -1,10 +1,16 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import type React from "react"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import type React from "react";
 
 interface FeatureCardProps {
-  icon: React.ReactNode
-  title: string
-  description: string
+  icon: React.ReactNode;
+  title: string;
+  description: string;
 }
 
 export function FeatureCard({ icon, title, description }: FeatureCardProps) {
@@ -16,9 +22,10 @@ export function FeatureCard({ icon, title, description }: FeatureCardProps) {
       </CardHeader>
       <CardContent>
         <CardDescription className="text-base">
-          {description || "Explore the cutting-edge features designed to enhance your hackathon experience."}
+          {description ||
+            "Explore the cutting-edge features designed to enhance your hackathon experience."}
         </CardDescription>
       </CardContent>
     </Card>
-  )
+  );
 }

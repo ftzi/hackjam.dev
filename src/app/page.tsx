@@ -1,10 +1,11 @@
-import { FeatureCard } from "@/components/landing-page/feature-card"
-import { StepCard } from "@/components/landing-page/step-card"
-import { TestimonialCard } from "@/components/landing-page/testimonial-card"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, CheckCircle2, Code2, Cpu, Globe, Zap } from "lucide-react"
+import { FeatureCard } from "@/components/landing-page/feature-card";
+import { StepCard } from "@/components/landing-page/step-card";
+import { TestimonialCard } from "@/components/landing-page/testimonial-card";
+import { Button } from "@/components/ui/button";
+import { mainPage } from "@/lib/consts";
+import { ArrowRight, CheckCircle2, Code2, Cpu, Globe, Zap } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link"
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -14,19 +15,22 @@ export default function Home() {
         <section className="relative overflow-hidden py-20 md:py-32">
           <div className="container flex flex-col items-center text-center">
             <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
-            <span className="rounded-full bg-muted px-3 py-1 text-sm font-medium mb-6">Introducing Hackathon Manager</span>
+            <span className="rounded-full bg-muted px-3 py-1 text-sm font-medium mb-6">
+              Introducing Hackathon Manager
+            </span>
             <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl mb-6">
               Empowering Hackathons with
               <br />
               Modern Web Solutions
             </h1>
             <p className="max-w-[700px] text-muted-foreground md:text-xl mb-8">
-              A platform for creating and managing hackathons, enabling participants to register and form teams. Built with
-              Next.js 15 and integrated with Supabase, Better Auth, OpenAI, and Sentry.
+              A platform for creating and managing hackathons, enabling
+              participants to register and form teams. Built with Next.js 15 and
+              integrated with Supabase, Better Auth, OpenAI, and Sentry.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
               <Button asChild size="lg" className="h-12 px-8 pl-3">
-                <Link href="/event-list">
+                <Link href={mainPage}>
                   Get Started
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
@@ -52,7 +56,8 @@ export default function Home() {
                 Key Features for Hackathon Success
               </h2>
               <p className="max-w-[700px] mx-auto text-muted-foreground">
-                Designed to deliver high-quality, fast, and innovative applications aligned with hackathon criteria.
+                Designed to deliver high-quality, fast, and innovative
+                applications aligned with hackathon criteria.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -94,9 +99,12 @@ export default function Home() {
         <section id="how-it-works" className="py-20">
           <div className="container px-2 md:px-6">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-4">How It Works</h2>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-4">
+                How It Works
+              </h2>
               <p className="max-w-[700px] mx-auto text-muted-foreground">
-                Get started in minutes with our intuitive and efficient workflow.
+                Get started in minutes with our intuitive and efficient
+                workflow.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -127,7 +135,8 @@ export default function Home() {
                 Trusted by Hackathon Organizers Worldwide
               </h2>
               <p className="max-w-[700px] mx-auto text-muted-foreground">
-                Join a growing community of organizers and participants building impactful hackathons.
+                Join a growing community of organizers and participants building
+                impactful hackathons.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -164,10 +173,13 @@ export default function Home() {
                 Start building your event today with our comprehensive platform.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button asChild size="lg" variant="secondary" className="h-12 px-8">
-                  <Link href={"/event-list"}>
-                    Events
-                  </Link>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="secondary"
+                  className="h-12 px-8"
+                >
+                  <Link href={mainPage}>Events</Link>
                 </Button>
                 <Button
                   asChild
@@ -175,16 +187,13 @@ export default function Home() {
                   variant="outline"
                   className="h-12 px-8 bg-transparent border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10"
                 >
-                  <Link href={"/about"}>
-                    About
-                  </Link>
+                  <Link href={"/about"}>About</Link>
                 </Button>
-
               </div>
             </div>
           </div>
         </section>
       </main>
     </div>
-  )
+  );
 }

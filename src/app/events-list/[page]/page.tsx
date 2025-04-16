@@ -2,13 +2,13 @@ import { CreateEventButton } from "@/components/events/create-event-button";
 import EventList from "@/components/events/event-list";
 import { getEventList } from "@/components/events/event-list.action";
 import SearchInput from "@/components/search-input";
+import { mainPage } from "@/lib/consts";
 import { db } from "@/server/db/db";
 import { events } from "@/server/db/schema/event";
 import { redirect } from "next/navigation";
 
 type Params = Promise<{ page: string }>;
-type SearchParams = Promise<{ query?: string }>
-
+type SearchParams = Promise<{ query?: string }>;
 
 interface PageProps {
   params: Params;
@@ -17,7 +17,10 @@ interface PageProps {
 
 const ITEMS_PER_PAGE = 6;
 
-export default async function PaginatedEventsPage({ params, searchParams }: PageProps) {
+export default async function PaginatedEventsPage({
+  params,
+  searchParams,
+}: PageProps) {
   const { page } = await params;
 
   const { query } = await searchParams;
@@ -29,11 +32,11 @@ export default async function PaginatedEventsPage({ params, searchParams }: Page
   const { events, totalPages } = await getEventList({
     searchQuery: searchQuery,
     limit: ITEMS_PER_PAGE,
-    page: currentPage
+    page: currentPage,
   });
 
   if (Number.isNaN(pageNumber) || pageNumber < 1) {
-    redirect("/event-list/1");
+    redirect(mainPage);
   }
 
   return (
@@ -79,8 +82,5 @@ export async function generateStaticParams() {
 
   return Array.from({ length: totalPages }, (_, index) => ({
     page: String(index + 1),
-  })
-  );
-
+  }));
 }
-

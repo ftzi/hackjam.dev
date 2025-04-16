@@ -17,8 +17,10 @@ export default function SearchInput({ defaultValue }: SearchInputProps) {
 
   useEffect(() => {
     if (debouncedSearchQuery !== defaultValue) {
-      const queryString = debouncedSearchQuery ? `?query=${encodeURIComponent(debouncedSearchQuery)}` : '';
-      router.push(`/event-list/1${queryString}`);
+      const queryString = debouncedSearchQuery
+        ? `?query=${encodeURIComponent(debouncedSearchQuery)}`
+        : "";
+      router.push(`/events-list/1${queryString}`);
     }
   }, [debouncedSearchQuery, router, defaultValue]);
 
