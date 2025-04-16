@@ -27,7 +27,7 @@ export async function createEventAction(values: FormValues) {
     })
     .returning();
 
-  revalidatePath("/events");
+  revalidatePath("/");
 
   return { success: true, event: newEvent[0] };
 }
