@@ -154,7 +154,7 @@ export default async function EventList({ events, currentPage, searchQuery, tota
                     <PaginationEllipsis />
                   ) : (
                     <PaginationLink
-                      href={`/page/${item.page}${searchQuery ? `?query=${encodeURIComponent(searchQuery)}` : ''}`}
+                      href={`/event-list/${item.page}${searchQuery ? `?query=${encodeURIComponent(searchQuery)}` : ''}`}
                       isActive={item.page === currentPage}
                     >
                       {item.page}
