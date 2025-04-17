@@ -11,11 +11,12 @@ Production URL: https://hackjam-dev.vercel.app
 ## Screenshots
 
 <div align="center">
-  <img src="resources/hackjam0.png" alt="HackJam Screenshot" width="400" />
-  <img src="resources/hackjam1.png" alt="HackJam Screenshot" width="400" />
-  <img src="resources/hackjam2.png" alt="HackJam Screenshot" width="400" />
-  <img src="resources/hackjam3.png" alt="HackJam Screenshot" width="400" />
-  <img src="resources/hackjam4.png" alt="HackJam Screenshot" width="400" />
+  <img src="resources/hackjam0.png" alt="HackJam Screenshot" width="600" />
+  <img src="resources/hackjam1.png" alt="HackJam Screenshot" width="600" />
+  <img src="resources/hackjam2.png" alt="HackJam Screenshot" width="600" />
+  <img src="resources/hackjam3.png" alt="HackJam Screenshot" width="600" />
+  <img src="resources/hackjam4.png" alt="HackJam Screenshot" width="600" />
+  <img src="resources/hackjam5.png" alt="HackJam Screenshot" width="600" />
 </div>
 
 ## Development
