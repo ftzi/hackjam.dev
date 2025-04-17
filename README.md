@@ -4,7 +4,7 @@ HackJam is a Next.js application that allows you to create and manage your own h
 
 ## About
 
-This is a Next.JS Hackathon submission done by Bruno Fantauzzi, Thiago Murtinho, and Raphael Novello.
+This is a Next.JS Hackathon submission done by [Bruno Fantauzzi](https://github.com/ftzi), [Thiago Murtinho](https://github.com/thiagomurtinho), and [Raphael Novello](https://github.com/RaphaelAN).
 
 Production URL: https://hackjam-dev.vercel.app
 
