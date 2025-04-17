@@ -36,41 +36,13 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import React from "react";
 import { toast } from "sonner";
 import {
   deleteEvent,
   deregisterOwnTeamFromEvent,
   registerOwnTeamToEvent,
 } from "../utils";
-
-// type Prize = {
-//   place: string;
-//   description: string;
-// };
-
-// type ScheduleItem = {
-//   day: string;
-//   description: string;
-// };
-
-// type Event = {
-//   id: string;
-//   title: string;
-//   description: string;
-//   startDate: string;
-//   endDate: string;
-//   status: string;
-//   teamLimit: number;
-//   participantsPerTeam: number;
-//   registeredTeams: number;
-//   location: string;
-//   eventType: string;
-//   maxParticipants: number;
-//   registrationDeadline: string;
-//   creatorId: string;
-//   prizes: Prize[];
-//   schedule: ScheduleItem[];
-// };
 
 export default function EventDetail({
   event,
@@ -87,6 +59,12 @@ export default function EventDetail({
 }) {
   const router = useRouter();
   const isCreator = event.createdBy === user?.id;
+  const [loading, setLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    setLoading(false);
+    void event;
+  }, [event]);
 
   const formatDate = (date: Date) => {
     return format(date, "PPP");
@@ -311,6 +289,10 @@ export default function EventDetail({
                         <AlertDialogAction
                           className="bg-destructive text-destructive-foreground"
                           onClick={async () => {
+                            if (!user) {
+                                router.push(`/login?redirect=/events/${event.id}`);
+                              return;
+                            }
                             await deleteEvent({ event });
                             toast.success("Event deleted successfully!");
                             router.push(mainPage);
@@ -329,15 +311,27 @@ export default function EventDetail({
                     variant={
                       userIsLeaderAndRegistered ? "destructive" : "default"
                     }
-                    onClick={() => {
-                      if (userIsLeaderAndRegistered)
-                        deregisterOwnTeamFromEvent({ event });
-                      else registerOwnTeamToEvent({ event });
+                    onClick={async () => {
+                      if (!user) {
+                        router.push(`/signup?redirect=/events/${event.id}`);
+                        return;
+                      }
+                      setLoading(true);
+                      try {
+                        if (userIsLeaderAndRegistered)
+                          await deregisterOwnTeamFromEvent({ event });
+                        else await registerOwnTeamToEvent({ event });
+                      } catch {
+                        setLoading(false);
+                      }
                     }}
+                    disabled={loading}
                   >
-                    {userIsLeaderAndRegistered
-                      ? "Deregister Team"
-                      : "Register Team"}
+                    {loading
+                      ? "Processing..."
+                      : userIsLeaderAndRegistered
+                        ? "Deregister Team"
+                        : "Register Team"}
                   </Button>
 
                   {/* {event.status === "upcoming" && (

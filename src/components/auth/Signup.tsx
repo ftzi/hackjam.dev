@@ -101,7 +101,14 @@ export const SignUpContent = () => {
 
       <p className="text-center text-sm text-muted-foreground mt-2">
         Already have an account?{" "}
-        <Link href="/login" className="text-primary hover:underline">
+        <Link
+          href={{
+            pathname: "/login",
+            query: { redirect: useSearchParams().get("redirect") },
+          }}
+          className="text-primary hover:underline"
+          replace={true}
+        >
           Login
         </Link>
       </p>

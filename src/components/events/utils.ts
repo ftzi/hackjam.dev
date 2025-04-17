@@ -50,7 +50,7 @@ export const registerOwnTeamToEvent = async ({
   event: Event;
 }) => {
   const user = await getUser();
-  if (!user) redirect("/signup");
+  if (!user) throw new Error("Not logged in");
 
   const isTeamLeaderRegistered = await db.query.teams.findFirst({
     where: (teams, { and, eq }) =>
@@ -73,7 +73,7 @@ export const deregisterOwnTeamFromEvent = async ({
   event: Event;
 }) => {
   const user = await getUser();
-  if (!user) redirect("/signup");
+  if (!user) throw new Error("Not logged in");
 
   await db.delete(teams).where(eq(teams.leaderId, user.id));
 
@@ -86,7 +86,7 @@ export const deleteEvent = async ({
   event: Event;
 }) => {
   const user = await getUser();
-  if (!user) redirect("/signup");
+  if (!user) throw new Error("Not logged in");
 
   if (user.id !== event.createdBy) redirect(mainPage);
 
