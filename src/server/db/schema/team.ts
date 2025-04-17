@@ -12,6 +12,7 @@ export const teams = pgTable("team", {
   eventId: uuid("event_id")
     .notNull()
     .references(() => events.id, { onDelete: "cascade" }),
+  submissionUrl: text("project_url"),
 });
 
 export type Team = typeof teams.$inferSelect;

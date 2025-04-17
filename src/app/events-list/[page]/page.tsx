@@ -49,7 +49,7 @@ export default async function PaginatedEventsPage({
                 Hackathon Events
               </h1>
               <p className="text-muted-foreground mt-1">
-                Manage your hackathon events and configurations
+                Manage your hackathon events
               </p>
             </div>
             <div className="flex flex-col sm:flex-row w-full md:w-auto gap-4 mt-4 md:mt-0">

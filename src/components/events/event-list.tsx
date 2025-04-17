@@ -110,14 +110,32 @@ export default async function EventList({
                         <div className="flex items-center">
                           <CalendarDays className="mr-2 h-4 w-4 opacity-70" />
                           <span>
-                            {new Date(event.startDate).toLocaleDateString()} -{" "}
-                            {new Date(event.endDate).toLocaleDateString()}
+                            <strong>Start Date</strong>:{" "}
+                            {new Date(event.startDate).toLocaleDateString()}
+                          </span>
+                        </div>
+                        <div className="flex items-center">
+                          <CalendarDays className="mr-2 h-4 w-4 opacity-70" />
+                          <span>
+                            <strong>End Date</strong>:{" "}
+                            {new Date(event.endDate).toLocaleDateString()}{" "}
+                            {`(duration: ${Math.ceil((new Date(event.endDate).getTime() - new Date(event.startDate).getTime()) / (1000 * 3600 * 24))} days)`}
+                          </span>
+                        </div>
+                        <div className="flex items-center">
+                          <CalendarDays className="mr-2 h-4 w-4 opacity-70" />
+                          <span>
+                            <strong>Registrate Until</strong>:{" "}
+                            {new Date(
+                              event.registrationDeadline,
+                            ).toLocaleDateString()}
                           </span>
                         </div>
                         <div className="flex items-center">
                           <Users className="mr-2 h-4 w-4 opacity-70" />
                           <span>
-                            Teams: {registeredTeams}/{event.maxTeams}{" "}
+                            <strong>Teams</strong>: {registeredTeams}/
+                            {event.maxTeams}{" "}
                             {event.maxTeamMembers
                               ? `(max ${event.maxTeamMembers} members per team)`
                               : undefined}

@@ -11,7 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { mainPage } from "@/lib/consts";
+import { cn } from "@/lib/utils";
 import type { User } from "@/server/auth";
 import type { Event } from "@/server/db/schema/event";
 import type { Team } from "@/server/db/schema/team";
@@ -28,6 +29,7 @@ import { format } from "date-fns";
 import {
   ArrowLeft,
   CalendarDays,
+  Check,
   Clock,
   Edit,
   Share2,
@@ -50,12 +52,14 @@ export default function EventDetail({
   userIsLeaderAndRegistered,
   teams,
   teamsCount,
+  userTeam,
 }: {
   event: Event;
   user?: User;
   userIsLeaderAndRegistered?: boolean;
   teams: Team[] | undefined;
   teamsCount: number;
+  userTeam: Team | undefined;
 }) {
   const router = useRouter();
   const isCreator = event.createdBy === user?.id;
@@ -135,12 +139,14 @@ export default function EventDetail({
           </Card>
 
           <Tabs defaultValue="rules" className="w-full">
-            <TabsList
-              className={`grid w-full ${isCreator ? "grid-cols-2" : "grid-cols-1"} `}
-            >
-              <TabsTrigger value="rules">Rules</TabsTrigger>
-              {isCreator && <TabsTrigger value="teams">Teams</TabsTrigger>}
-            </TabsList>
+            {isCreator ? (
+              <TabsList className={"grid w-full grid-cols-2"}>
+                <TabsTrigger value="rules">Rules</TabsTrigger>
+                <TabsTrigger value="teams">Teams</TabsTrigger>
+              </TabsList>
+            ) : (
+              <h2 className="mx-auto font-semibold text-xl">Rules</h2>
+            )}
 
             <TabsContent value="rules" className="space-y-4 pt-4">
               <Card>
@@ -216,39 +222,6 @@ export default function EventDetail({
                 </Card>
               </TabsContent>
             )}
-
-            {/* <TabsContent value="prizes" className="space-y-4 pt-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Prizes & Awards</CardTitle>
-                  <CardDescription>
-                    Rewards for the winning teams
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-6 md:grid-cols-3">
-                    {event.prizes.map((prize, index) => (
-                      <Card
-                        key={JSON.stringify({ prize, index })}
-                        className="overflow-hidden border-0 bg-muted"
-                      >
-                        <CardHeader className="pb-3">
-                          <div className="flex items-center gap-2">
-                            <Award className="h-5 w-5 text-primary" />
-                            <CardTitle className="text-lg">
-                              {prize.place} Place
-                            </CardTitle>
-                          </div>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-sm">{prize.description}</p>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent> */}
           </Tabs>
         </div>
 
@@ -290,7 +263,9 @@ export default function EventDetail({
                           className="bg-destructive text-destructive-foreground"
                           onClick={async () => {
                             if (!user) {
-                                router.push(`/login?redirect=/events/${event.id}`);
+                              router.push(
+                                `/login?redirect=/events/${event.id}`,
+                              );
                               return;
                             }
                             await deleteEvent({ event });
@@ -355,10 +330,20 @@ export default function EventDetail({
                     Copy Event Link
                   </Button>
 
-                  {/* <Button className="w-full" variant="outline">
-                    <Calendar className="mr-2 h-4 w-4" />
-                    Add to Calendar
-                  </Button> */}
+                  {userIsLeaderAndRegistered && (
+                    <Link
+                      href={`/events/${event.id}/submit`}
+                      className={cn(
+                        "w-full",
+                        buttonVariants({ variant: "default" }),
+                        userTeam?.submissionUrl &&
+                          "pointer-events-none opacity-50",
+                      )}
+                    >
+                      {userTeam?.submissionUrl && <Check />}
+                      Submit Project
+                    </Link>
+                  )}
                 </div>
               )}
             </CardContent>
@@ -378,14 +363,14 @@ export default function EventDetail({
                     {teamsCount}/{event.maxTeams}
                   </span>
                 </div>
-                {/* <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
+                <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
                   <div
                     className="h-full bg-primary rounded-full"
                     style={{
-                      width: `${(registeredTeams / event.maxTeams) * 100}%`,
+                      width: `${(teamsCount / event.maxTeams) * 100}%`,
                     }}
                   />
-                </div> */}
+                </div>
 
                 <div className="pt-2">
                   <p className="text-sm text-muted-foreground">

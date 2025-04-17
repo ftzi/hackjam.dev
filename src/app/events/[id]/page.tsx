@@ -26,6 +26,14 @@ export default async function EventPage({
 
   const teams = isCreator ? await getTeamsForEvent(event) : undefined;
   const teamsCount = await getTeamsCountForEvent(event);
+
+  const userTeam = user
+    ? await db.query.teams.findFirst({
+        where: (teams, { and, eq }) =>
+          and(eq(teams.leaderId, user.id), eq(teams.eventId, event.id)),
+      })
+    : undefined;
+
   return (
     <div className="flex min-h-screen flex-col items-center">
       <main className="flex-1">
@@ -39,6 +47,7 @@ export default async function EventPage({
               }
               teams={teams}
               teamsCount={teamsCount}
+              userTeam={userTeam}
             />
           </Suspense>
         </div>

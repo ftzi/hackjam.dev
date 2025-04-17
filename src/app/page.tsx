@@ -15,7 +15,7 @@ export default function Home() {
         <section className="relative overflow-hidden py-20 md:py-32">
           <div className="container flex flex-col items-center text-center">
             <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
-            <span className="rounded-full bg-muted px-3 py-1 text-sm font-medium mb-6">
+            <span className="rounded-full bg-muted px-5 py-1 text-sm font-medium mb-6 border-1">
               Introducing Hackathon Manager
             </span>
             <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl mb-6">
@@ -25,14 +25,13 @@ export default function Home() {
             </h1>
             <p className="max-w-[700px] text-muted-foreground md:text-xl mb-8">
               A platform for creating and managing hackathons, enabling
-              participants to register and form teams. Built with Next.js 15 and
-              integrated with Supabase, Better Auth, OpenAI, and Sentry.
+              participants to register and form teams. Built with Next.js 15, Drizzle, Neon, Better Auth and Shadcn.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
-              <Button asChild size="lg" className="h-12 px-8 pl-3">
+              <Button asChild className="h-12 w-36">
                 <Link href={mainPage}>
                   Get Started
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="ml-0 h-4 w-4" />
                 </Link>
               </Button>
             </div>
@@ -72,24 +71,9 @@ export default function Home() {
                 description="Deploy seamlessly to a global edge network for minimal latency."
               />
               <FeatureCard
-                icon={<Cpu className="h-10 w-10 text-primary" />}
-                title="AI Integration"
-                description="Leverage OpenAI for smarter development and innovative solutions."
-              />
-              <FeatureCard
                 icon={<CheckCircle2 className="h-10 w-10 text-primary" />}
                 title="Secure Authentication"
                 description="Powered by Better Auth for robust and secure user management."
-              />
-              <FeatureCard
-                icon={<Code2 className="h-10 w-10 text-primary" />}
-                title="Error Monitoring"
-                description="Integrated with Sentry for real-time error tracking and debugging."
-              />
-              <FeatureCard
-                icon={<Zap className="h-10 w-10 text-primary" />}
-                title="Streamlined Workflow"
-                description="Simplify development with pre-built components and APIs."
               />
             </div>
           </div>

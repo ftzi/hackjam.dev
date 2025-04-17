@@ -94,3 +94,21 @@ export const deleteEvent = async ({
 
   revalidateEvent(event.id);
 };
+
+export const submitTeamProject = async ({
+  eventId,
+  url,
+}: {
+  eventId: string;
+  url: string;
+}) => {
+  const user = await getUser();
+  if (!user) throw new Error("Not logged in");
+
+  await db
+    .update(teams)
+    .set({ submissionUrl: url })
+    .where(eq(teams.leaderId, user.id))
+
+  revalidateEvent(eventId);
+}
