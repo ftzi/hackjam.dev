@@ -21,7 +21,11 @@ Production URL: https://hackjam-dev.vercel.app
 ## Development
 
 - `bun i`
-- `bun env`
+- You need a .env file with:
+```
+BETTER_AUTH_SECRET="any string"
+DATABASE_URL=<Postgres URL>
+```
 - `bun dev`
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
