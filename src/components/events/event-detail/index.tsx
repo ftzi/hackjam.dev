@@ -216,6 +216,11 @@ export default function EventDetail({
                         className="flex items-center justify-between py-2 border-b border-border"
                       >
                         <span>{team.name}</span>
+                        {team.submissionUrl && (
+                          <Link href={team.submissionUrl} className="underline">
+                            {team.submissionUrl ? `${team.submissionUrl}` : ""}
+                          </Link>
+                        )}
                       </div>
                     ))}
                   </CardContent>
