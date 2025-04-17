@@ -99,7 +99,12 @@ export default function EventDetail({
               <CardTitle>Event Details</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-muted-foreground">{event.description}</p>
+              {event.description.split("\\n").map((paragraph, index) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                <p key={paragraph + index} className="text-muted-foreground">
+                  {paragraph}
+                </p>
+              ))}
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
                 <div className="flex items-center">
